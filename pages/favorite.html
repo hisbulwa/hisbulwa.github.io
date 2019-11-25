@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tim Favorit</title>
+    <meta name="description" content="Tim Favorit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00897B" />
+    <script src="js/api.js"></script>
+    <script type="text/javascript" src="js/idb.js"></script>
+    <script src="js/favorite.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+  <body>
+    <h2>Tim Favorite</h2>
+    <p>Klik Favorit untuk melihat jadwal pertandingan tim tersebut</p>
+
+    <div class="row">
+      <div class="col s12 m9" id="list-team">
+      </div>
+      <div class="col s12 m3">
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th colspan="2">Tim Favorit</th>
+              <th class="center">Aksi</th>
+            </tr>
+          <thead>
+          <tbody id="list-favorite">
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="row">
+        <form class="col s10 offset-s1">
+          <div class="row">
+
+              <input placeholder="" id="id" type="text" class="validate">
+
+            <div class="input-field col s6">
+              <input placeholder="" id="tim" type="text" class="validate">
+              <label for="tim">Tim Favorite</label>
+            </div>
+            <div class="input-field col s6">
+              <input placeholder="" id="negara" type="text" class="validate">
+              <label for="negara">Negara</label>
+            </div>
+          </div>
+          <div class="row center" style="padding-left:10px">
+            <a class="waves-effect waves-light btn green" onclick="tambahtimfavorite();">tambah</a>
+            <a class="waves-effect waves-light btn teal" onclick="updateTim();">ubah</a>
+            <a class="waves-effect waves-light btn red">hapus semua</a>
+          </div>
+        </form>
+      </div> -->
+      <!-- <div class="row">
+        <table class="highlight">
+          <tbody id="list-team">
+          </tbody>
+        </table>
+      </div> -->
+    </div>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script type="text/javascript" src="js/idb.js"></script>
+    <script src="js/favorite.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      };
+
+      document.addEventListener("DOMContentLoaded", function() {
+        getTeam();
+        bacatimfavorite();
+    });
+    </script>
+  </body>
+</html>

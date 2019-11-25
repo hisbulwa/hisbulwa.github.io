@@ -1,0 +1,17 @@
+{
+    "name": "Bundesliga Jerman",
+    "short_name": "Bundesliga",
+    "description": "Aplikasi PWA Bundesliga",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "gcm_sender_id": "856909524006"
+}
