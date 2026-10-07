@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulator Penilaian Indeks Pojok Statistik (IPotik) 2026</title>
+  <meta name="description" content="Simulator Penilaian Indeks Pojok Statistik (IPotik) 2026 berdasarkan Panduan Monitoring dan Evaluasi BPS RI.">
+  <meta name="theme-color" content="#f8fafc">
+  <style>
+    :root {
+      --primary: #0369a1;
+      --primary-dark: #075985;
+      --primary-light: #e0f2fe;
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --hijau: #166534;
+      --hijau-bg: #dcfce7;
+      --kuning: #92400e;
+      --kuning-bg: #fef3c7;
+      --merah: #dc2626;
+      --merah-bg: #fee2e2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: rgb(3 105 161 / 15%);
+    }
+
+    button, a, select, input:not([type="range"]), summary {
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+
+    /* LOGIN SCREEN */
+    #login-view {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: linear-gradient(135deg, #0f2b48 0%, #0369a1 100%);
+    }
+    .login-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 10px 10px -5px rgba(0,0,0,0.1);
+      padding: 36px 30px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .login-header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .login-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .login-field {
+      margin-bottom: 16px;
+    }
+    .login-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .login-field input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      transition: border-color 0.15s;
+    }
+    .login-field input:focus {
+      border-color: var(--primary);
+    }
+    .login-error {
+      background: var(--merah-bg);
+      color: var(--merah);
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      display: none;
+    }
+    .login-hint {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e0f2fe;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 101;
+      padding: 8px 12px;
+      transform: translateY(-150%);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-md);
+    }
+    .skip-link:focus-visible {
+      transform: translateY(0);
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* HEADER */
+    header.hero {
+      background: linear-gradient(135deg, #0f2b48 0%, #0369a1 100%);
+      color: white;
+      padding: 14px 0;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .hero-user-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* STICKY TOP SCOREBOARD */
+    .sticky-score-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      padding: 12px 0;
+      margin-bottom: 24px;
+    }
+    .score-bar-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .score-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .score-value-box {
+      display: flex;
+      flex-direction: column;
+    }
+    .score-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .score-number {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text);
+    }
+    .score-number.is-pending {
+      font-size: 1rem;
+    }
+    .score-scale {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .zona-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1px solid transparent;
+      transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+    }
+    .zona-pill.zona-hijau {
+      background: var(--hijau-bg);
+      color: var(--hijau);
+      border-color: #86efac;
+    }
+    .zona-pill.zona-kuning {
+      background: var(--kuning-bg);
+      color: var(--kuning);
+      border-color: #fde047;
+    }
+    .zona-pill.zona-merah {
+      background: var(--merah-bg);
+      color: var(--merah);
+      border-color: #fca5a5;
+    }
+    .zona-pill.zona-belum-dinilai {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .zona-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .score-progress-wrap {
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .progress-track {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+    .save-status {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+
+    .score-actions-wrap { display: contents; }
+    .btn.score-more-btn { display: none; }
+    .score-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .method-selector {
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      cursor: pointer;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+    }
+    .btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+    .btn-danger {
+      color: var(--merah);
+    }
+    .btn-danger:hover {
+      background: var(--merah-bg);
+      border-color: #fca5a5;
+    }
+    button:focus-visible,
+    .btn:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    summary:focus-visible,
+    label:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* DIMENSI GRID */
+    .dimensi-summary-section {
+      margin-bottom: 24px;
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dimensi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .dimensi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .dimensi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+    .dimensi-card-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .dimensi-card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dimensi-card-score {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .dimensi-card-pct {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .dimensi-card-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .app-footer {
+      margin-top: 40px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+    .app-footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px 24px;
+      flex-wrap: wrap;
+    }
+    .app-footer strong {
+      color: var(--text);
+    }
+
+    /* DIMENSI & ASPEK ACCORDION / SECTIONS */
+    .dimensi-block {
+      background: transparent;
+      margin-bottom: 32px;
+      scroll-margin-top: 12rem;
+    }
+    .dimensi-header {
+      background: #0f172a;
+      color: white;
+      padding: 14px 20px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .dimensi-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dimensi-header .dimensi-badge {
+      background: rgba(255,255,255,0.18);
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .aspek-block {
+      background: var(--card-bg);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 20px;
+    }
+    .aspek-block:last-child {
+      border-radius: 0 0 var(--radius) var(--radius);
+      margin-bottom: 20px;
+    }
+    .aspek-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .aspek-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+    .aspek-meta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+    }
+
+    /* BUTIR CARD */
+    .butir-card {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .butir-card:last-child {
+      margin-bottom: 0;
+    }
+    .butir-card:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+    .butir-card.has-value {
+      border-left: 4px solid var(--primary);
+    }
+    .butir-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .butir-number {
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: var(--navy);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .butir-score-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .butir-score-badge.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid #bae6fd;
+    }
+    .butir-question {
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    /* BUKTI DUKUNG COLLAPSIBLE */
+    details.bukti-box {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+    }
+    details.bukti-box summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--primary-dark);
+      user-select: none;
+    }
+    details.bukti-box .bukti-content {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: #475569;
+    }
+    details.bukti-box a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* INPUT CONTROLS */
+    .checklist-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: white;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+    .check-item:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .check-item input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .check-item.checked {
+      background: #f0f9ff;
+      border-color: #7dd3fc;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .radio-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: white;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+    .radio-item:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .radio-item input[type="radio"] {
+      margin-top: 3px;
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .radio-item.selected {
+      background: #f0f9ff;
+      border-color: #7dd3fc;
+      font-weight: 500;
+    }
+    .radio-score-tag {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+    .radio-item.selected .radio-score-tag {
+      background: #bae6fd;
+      color: var(--primary-dark);
+    }
+
+    .lampiran3-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      background: white;
+      padding: 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-field label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .form-field select, .form-field input[type="number"] {
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      color: var(--text);
+    }
+    .form-field select:focus, .form-field input[type="number"]:focus {
+      border-color: var(--primary);
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .slider-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .lampiran3-preview {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 60px;
+      }
+      .container {
+        padding: 0 12px;
+      }
+      .app-footer-content {
+        flex-direction: column;
+        gap: 4px;
+      }
+      header.hero {
+        padding: 12px 0;
+        margin-bottom: 14px;
+      }
+      .hero h1 {
+        font-size: 1.1rem;
+      }
+      .sticky-score-bar {
+        padding: 8px 0;
+        margin-bottom: 16px;
+      }
+      .score-bar-grid {
+        gap: 8px;
+      }
+      .score-main {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .score-number {
+        font-size: 1.6rem;
+      }
+      .zona-pill {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+      }
+      .score-progress-wrap {
+        flex: 1 1 auto;
+        min-width: 120px;
+        max-width: none;
+      }
+      .btn.score-more-btn {
+        display: inline-flex;
+        padding: 6px 10px;
+        font-size: 0.74rem;
+      }
+      .score-actions {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .score-actions.is-open {
+        display: flex;
+      }
+      .dimensi-block {
+        scroll-margin-top: 15rem;
+      }
+      .score-actions .method-selector,
+      .score-actions .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        padding: 6px 8px;
+        font-size: 0.74rem;
+      }
+      .dimensi-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 8px;
+      }
+      .dimensi-card {
+        padding: 10px;
+      }
+      .dimensi-card-title {
+        font-size: 0.82rem;
+      }
+      .dimensi-card-score {
+        font-size: 1.1rem;
+      }
+      .dimensi-header {
+        padding: 10px 14px;
+      }
+      .dimensi-header h2 {
+        font-size: 1rem;
+      }
+      .dimensi-header .dimensi-badge {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+      }
+      .aspek-block {
+        padding: 14px 12px;
+      }
+      .aspek-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .aspek-meta {
+        font-size: 0.72rem;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .butir-card {
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+      .butir-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .butir-score-badge {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 0.72rem;
+        padding: 4px 8px;
+      }
+      .butir-question {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+      .check-item, .radio-item {
+        padding: 8px 10px;
+        font-size: 0.82rem;
+      }
+      .radio-item {
+        flex-wrap: wrap;
+      }
+      .radio-score-tag {
+        margin-left: 0;
+        margin-top: 4px;
+        font-size: 0.7rem;
+      }
+      .lampiran3-wrap {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 10px;
+      }
+      .lampiran3-preview {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        font-size: 0.74rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dimensi-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .dimensi-grid .dimensi-card:last-child {
+        grid-column: 1 / -1;
+      }
+      .login-card {
+        padding: 24px 18px;
+      }
+      .login-header h1 {
+        font-size: 1.25rem;
+      }
+    }
+
+    /* PRINT STYLES */
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding-bottom: 0;
+      }
+      #login-view, .sticky-score-bar, .score-actions, .hero, .app-footer, .btn, details.bukti-box summary, .check-item input, .radio-item input, .slider-row input[type="range"] {
+        display: none !important;
+      }
+      .print-header {
+        display: block !important;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+      }
+      .print-header h1 { font-size: 1.4rem; }
+      .print-summary-table {
+        display: table !important;
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+      }
+      .print-summary-table th, .print-summary-table td {
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+      }
+      .print-summary-table th { background: #f0f0f0; }
+      .butir-card {
+        page-break-inside: avoid;
+        border: 1px solid #ccc !important;
+        margin-bottom: 10px;
+      }
+    }
+    .print-header, .print-summary-table { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-view">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Pojok Statistik</h1>
+        <p>Masuk ke Simulator Penilaian IPotik 2026</p>
+      </div>
+      <div id="login-error" class="login-error" role="alert"></div>
+      <form id="login-form">
+        <div class="login-field">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" name="username" placeholder="Masukkan username" required autocomplete="username" spellcheck="false">
+        </div>
+        <div class="login-field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" placeholder="Masukkan password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; justify-content: center; font-size: 0.92rem;">
+          Masuk
+        </button>
+      </form>
+      <div class="login-hint">
+        Akun default evaluasi: <strong>admin</strong> / <strong>admin</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION VIEW (Protected) -->
+  <div id="app-view" style="display: none;">
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+    <!-- PRINT ONLY HEADER -->
+    <div class="print-header container">
+      <h1>Laporan Simulasi Penilaian Indeks Pojok Statistik (IPotik) 2026</h1>
+      <p>Tanggal Simulasi: <span id="print-date"></span></p>
+      <div id="print-score-summary" style="margin-top:10px; font-weight:bold; font-size:1.1rem;"></div>
+    </div>
+
+    <!-- HERO HEADER -->
+    <header class="hero">
+      <div class="container hero-content">
+        <h1>Simulator IPotik 2026</h1>
+        <div class="hero-user-box">
+          <span class="user-pill"><span id="user-display">admin</span></span>
+          <button class="btn btn-danger" id="btn-logout" title="Keluar dari sesi" style="font-size:0.75rem; padding:4px 10px;">
+            Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- STICKY SCOREBOARD -->
+    <section class="sticky-score-bar">
+      <div class="container score-bar-grid">
+        <div class="score-main">
+          <div class="score-value-box">
+            <span class="score-label">Indeks IPotik</span>
+            <div>
+              <span class="score-number is-pending" id="grand-score">Belum dinilai</span>
+              <span class="score-scale" id="score-scale" hidden>/ 4.00</span>
+            </div>
+          </div>
+          <div class="zona-pill zona-belum-dinilai" id="zona-badge">
+            <span class="zona-dot" id="zona-dot" aria-hidden="true" hidden></span>
+            <span id="zona-text">Belum ada jawaban</span>
+          </div>
+        </div>
+
+        <div class="score-progress-wrap">
+          <div class="progress-meta">
+            <span id="progress-label">Progres Pengisian</span>
+            <span id="progress-text">0 / 33 Butir (0%)</span>
+          </div>
+          <div class="progress-track" id="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="progress-label">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <span class="save-status">Jawaban disimpan otomatis di browser ini.</span>
+        </div>
+
+        <div class="score-actions-wrap">
+          <button type="button" class="btn score-more-btn" id="score-more-toggle" aria-expanded="false" aria-controls="score-actions">
+            Lainnya
+          </button>
+          <div class="score-actions" id="score-actions">
+            <label class="visually-hidden" for="method-select">Metode pembobotan</label>
+            <select class="method-selector" id="method-select" name="method" autocomplete="off">
+              <option value="1">Metode 1: Rumus Resmi (Default)</option>
+              <option value="2">Metode 2: Bobot Tercetak</option>
+            </select>
+            <button class="btn btn-primary" id="btn-max" title="Isi semua butir dengan skor tertinggi">
+              Skor Maksimal
+            </button>
+            <button class="btn btn-danger" id="btn-reset" title="Kosongkan seluruh isian">
+              Reset
+            </button>
+            <button class="btn" id="btn-print" title="Cetak atau simpan sebagai dokumen PDF">
+              Cetak / PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="container" id="main-content" tabindex="-1">
+      <!-- RINGKASAN DIMENSI -->
+      <section class="dimensi-summary-section">
+        <h2 class="section-title">Capaian Per Dimensi</h2>
+        <div class="dimensi-grid" id="dimensi-summary-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- FORMULIR PENILAIAN 33 BUTIR -->
+      <section id="form-container">
+        <!-- Rendered by JS -->
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container app-footer-content">
+        <span><strong>Simulator IPotik 2026</strong> · Badan Pusat Statistik Provinsi Jawa Timur</span>
+        <span>Acuan: Panduan Monitoring dan Evaluasi Pojok Statistik 2026</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- EMBEDDED FALLBACK DATA & ENGINE (Guarantees zero-setup file:// offline operation) -->
+  <script id="ipotik-config-fallback" type="application/json">
+{
+  "meta": {
+    "title": "Penilaian Monev Pojok Statistik 2026",
+    "subtitle": "Indeks Pojok Statistik (IPotik)",
+    "sumber": "Panduan Monitoring dan Evaluasi Pojok Statistik 2026 (Lampiran 1–3, hal. 12–28)",
+    "cakupan": "Pojok Statistik aktif di Pojok Statistik Virtual s.d. 31 Juli 2026",
+    "periodeAktivitas": "Agustus 2025 – Juli 2026",
+    "skalaIPotik": { "min": 0, "max": 4 },
+    "jumlahButir": 33,
+    "metodeDefault": 1,
+    "keterangan": {
+      "metode1": "Rumus resmi hal. 13: tiap butir dalam satu aspek berbobot sama (bobot aspek ÷ jumlah butir)",
+      "metode2": "Bobot tercetak pada instrumen (ada perbedaan di aspek Kegiatan Utama)"
+    }
+  },
+
+  "dimensi": [
+    { "id": "kelembagaan",          "nama": "Kelembagaan",          "bobot": 0.10 },
+    { "id": "aksesibilitas",        "nama": "Aksesibilitas",        "bobot": 0.15 },
+    { "id": "kualitas_sdm",         "nama": "Kualitas SDM",         "bobot": 0.20 },
+    { "id": "efektivitas_kegiatan", "nama": "Efektivitas Kegiatan", "bobot": 0.40 },
+    { "id": "kolaborasi",           "nama": "Kolaborasi",           "bobot": 0.15 }
+  ],
+
+  "aspek": [
+    { "id": "dasar_hukum",           "nama": "Ketersediaan dan Kesesuaian Dasar Hukum", "dimensiId": "kelembagaan",          "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "rpk",                   "nama": "Ketersediaan Rencana Program Kerja",      "dimensiId": "kelembagaan",          "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "lokasi",                "nama": "Lokasi",                                  "dimensiId": "aksesibilitas",        "bobot": 0.02, "jumlahButir": 1 },
+    { "id": "ruangan_fasilitas",     "nama": "Ruangan dan Fasilitas",                   "dimensiId": "aksesibilitas",        "bobot": 0.13, "jumlahButir": 8 },
+    { "id": "keterlibatan_agen",     "nama": "Keterlibatan Agen Statistik",             "dimensiId": "kualitas_sdm",         "bobot": 0.10, "jumlahButir": 2 },
+    { "id": "pembinaan",             "nama": "Pembinaan dan Pengawasan",                "dimensiId": "kualitas_sdm",         "bobot": 0.10, "jumlahButir": 3 },
+    { "id": "kegiatan_utama",        "nama": "Kegiatan Utama",                          "dimensiId": "efektivitas_kegiatan", "bobot": 0.35, "jumlahButir": 13 },
+    { "id": "kegiatan_tambahan",     "nama": "Kegiatan Tambahan",                       "dimensiId": "efektivitas_kegiatan", "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "kolaborasi_pembiayaan", "nama": "Kolaborasi Pembiayaan",                   "dimensiId": "kolaborasi",           "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "kolaborasi_bps",        "nama": "Kolaborasi dengan Kegiatan BPS Lainnya",  "dimensiId": "kolaborasi",           "bobot": 0.10, "jumlahButir": 2 }
+  ],
+
+  "butir": [
+    {
+      "no": "1",
+      "aspekId": "dasar_hukum",
+      "pertanyaan": "Apakah tersedia dasar hukum yang relevan?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumen MoU, PKS, SK Tim Pojok Statistik BPS, SK Koordinator Pojok Statistik Perguruan Tinggi",
+      "contohLink": "s.bps.go.id/PotikLegal",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia MoU yang relevan (tahun dan isi)",
+        "Tersedia PKS yang relevan (tahun dan isi)",
+        "Tersedia SK Tim Pojok Statistik BPS yang relevan (tahun dan isi)",
+        "Tersedia SK Koordinator Pojok Statistik Perguruan Tinggi yang relevan (tahun dan isi)"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "2",
+      "aspekId": "rpk",
+      "pertanyaan": "Apakah tersedia Rencana Program Kerja 2025?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "RPK yang diinput pada PSV dan/atau dokumen RPK yang dilegalisasi",
+      "contohLink": "s.bps.go.id/PotikLegal",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Sudah input dan upload file RPK" },
+        { "skor": 3, "label": "Sudah input RPK, namun tidak upload file" },
+        { "skor": 2, "label": "Tidak input RPK namun sudah upload file" },
+        { "skor": 1, "label": "Tidak input dan tidak upload file RPK" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "3",
+      "aspekId": "lokasi",
+      "pertanyaan": "Di mana lokasi Ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.02,
+      "buktiDukung": "Foto/video tampak luar yang menunjukkan posisi Pojok Statistik di Perguruan Tinggi",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Area Perpustakaan Utama Perguruan Tinggi" },
+        { "skor": 3, "label": "Area Gedung lain yang berada di bawah kewenangan Rektorat" },
+        { "skor": 2, "label": "Area Perpustakaan Fakultas" },
+        { "skor": 1, "label": "Area Gedung Perkuliahan yang berada di bawah kewenangan Fakultas" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "4",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Berapa luas ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Tersedia ruangan Pojok Statistik dengan luas lebih dari 20 m²" },
+        { "skor": 3, "label": "Tersedia ruangan Pojok Statistik dengan luas 16 m² – 20 m²" },
+        { "skor": 2, "label": "Tersedia ruangan Pojok Statistik dengan luas 11 m² – 15 m²" },
+        { "skor": 1, "label": "Tersedia ruang Pojok Statistik dengan luas kurang atau sama dengan 10 m²" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "5",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Apakah ruang Pojok Statistik telah memenuhi standar dekorasi?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia papan nama di luar ruangan yang memuat nama dan logo baik BPS maupun Perguruan Tinggi",
+        "Tersedia backdrop/spanduk background yang memuat tulisan: Pojok Statistik",
+        "Tersedia rak buku dengan bentuk Sigma",
+        "Nuansa ruangan mengacu pada nuansa warna Pojok Statistik"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "6",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Bagaimana kondisi jaringan listrik di ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Tersedia jaringan listrik dan selalu berfungsi" },
+        { "skor": 3, "label": "Tersedia jaringan listrik dan sering berfungsi" },
+        { "skor": 2, "label": "Tersedia jaringan listrik dan jarang berfungsi" },
+        { "skor": 1, "label": "Tidak tersedia jaringan listrik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "7",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Apakah ruang Pojok Statistik memiliki jaringan internet?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, tersedia WIFI dan LAN" },
+        { "skor": 3, "label": "Ya, tersedia WIFI" },
+        { "skor": 2, "label": "Ya, tersedia LAN" },
+        { "skor": 1, "label": "Tidak tersedia jaringan internet" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "8",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Bagaimana kondisi jaringan internet di ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Jaringan internet selalu berfungsi" },
+        { "skor": 3, "label": "Jaringan internet sering berfungsi" },
+        { "skor": 2, "label": "Jaringan internet jarang berfungsi" },
+        { "skor": 1, "label": "Jaringan internet tidak berfungsi" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "9",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Fasilitas apa saja yang tersedia di area konsultasi statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia meja khusus untuk layanan konsultasi statistik",
+        "Tersedia kursi khusus untuk layanan konsultasi statistik",
+        "Tersedia komputer unit/laptop khusus untuk layanan Konsultasi Statistik",
+        "Tersedia komputer untuk mengakses buku tamu elektronik yang terintegrasi dengan buku tamu PST BPS"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "10",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Fasilitas apa saja yang tersedia di area literasi/area baca di Pojok Statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia meja baca di area literasi",
+        "Tersedia tempat duduk/bean bag di area literasi",
+        "Tersedia publikasi/buku yang dapat diakses oleh pengunjung",
+        "Tersedia rak buku"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "11",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Sarana promosi apa saja yang tersedia di ruang Pojok Statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia media promosi digital berupa TV LED yang menampilkan informasi",
+        "Tersedia media promosi dalam bentuk Banner",
+        "Tersedia media promosi dalam bentuk Poster yang memuat informasi terkini",
+        "Tersedia media promosi dalam bentuk Leaflet"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "12",
+      "aspekId": "keterlibatan_agen",
+      "pertanyaan": "Apakah terdapat keterlibatan Mahasiswa dalam kegiatan Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "SK/Surat Tugas keterlibatan mahasiswa",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Terdapat pelibatan Mahasiswa Agen Statistik dengan Surat Keputusan/Surat Tugas Perguruan Tinggi" },
+        { "skor": 3, "label": "Terdapat pelibatan Mahasiswa Agen Statistik tanpa Surat Keputusan/Surat Tugas Perguruan Tinggi" },
+        { "skor": 2, "label": "Terdapat pelibatan Mahasiswa dalam kegiatan Pojok Statistik namun bukan sebagai Agen Statistik" },
+        { "skor": 1, "label": "Tidak ada pelibatan Mahasiswa dalam kegiatan Pojok Statistik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "13",
+      "aspekId": "keterlibatan_agen",
+      "pertanyaan": "Bagaimana mekanisme pemilihan/rekrutmen Agen Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumen proses rekrutmen/seleksi",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Dengan proses seleksi secara terbuka/diumumkan di media sosial/media kampus" },
+        { "skor": 3, "label": "Dengan proses seleksi secara tertutup" },
+        { "skor": 2, "label": "Penunjukan langsung oleh Perguruan Tinggi dengan Surat Keputusan/Surat Tugas" },
+        { "skor": 1, "label": "Penunjukan langsung oleh Perguruan Tinggi tanpa Surat Keputusan/Surat Tugas" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "14",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Apakah terdapat jadwal pembinaan Agen Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal dan dokumentasi pembinaan",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, terdapat jadwal Pembinaan Agen Statistik secara berkala dan terlaksana sesuai jadwal (100%)" },
+        { "skor": 3, "label": "Ya, terdapat jadwal Pembinaan Agen Statistik namun belum terlaksana sepenuhnya" },
+        { "skor": 2, "label": "Tidak terdapat jadwal, namun telah dilaksanakan Pembinaan Agen Statistik" },
+        { "skor": 1, "label": "Tidak terdapat jadwal pembinaan Agen Statistik dan belum ada kegiatan pembinaan Agen Statistik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "15",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Apakah terdapat jadwal pengawasan/asistensi/kunjungan dari BPS Pengampu?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal dan dokumentasi pengawasan/asistensi",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Terdapat jadwal pengawasan/asistensi dan terlaksana sesuai jadwal (100%)" },
+        { "skor": 3, "label": "Terdapat jadwal pengawasan/asistensi namun belum terlaksana sepenuhnya" },
+        { "skor": 2, "label": "Tidak terdapat jadwal pengawasan/asistensi namun telah dilakukan pengawasan/asistensi" },
+        { "skor": 1, "label": "Tidak terdapat jadwal pengawasan/asistensi dan belum dilakukan pengawasan/asistensi" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "16",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Jadwal pengawasan/asistensi/kunjungan ke Pojok Statistik",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal kunjungan BPS pengampu",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "catatan": "Bobot terpotong pada PDF; diturunkan dari bobot aspek (10% ÷ 3 = 3,33%)",
+      "rubrik": [
+        { "skor": 4, "label": "Harian (lebih dari 1 hari per pekan)" },
+        { "skor": 3, "label": "Mingguan/Pekanan (1 hari per pekan)" },
+        { "skor": 2, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 1, "label": "Tentatif (tidak terjadwal)" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "17",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Media dan cakupan promosi statistik yang telah dilakukan?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi kegiatan promosi",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Promosi statistik secara digital melalui media sosial resmi Pojok Statistik/media sosial resmi Perguruan Tinggi",
+        "Promosi statistik secara tatap muka dalam bentuk pameran/event lainnya dengan cakupan eksternal (publik)",
+        "Promosi statistik secara tatap muka dalam bentuk event (pameran/sosialisasi) dengan cakupan internal Perguruan Tinggi (lintas fakultas)",
+        "Promosi statistik tatap muka dalam bentuk event (pameran/sosialisasi) dengan cakupan internal Fakultas"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "18",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Persentase penyusun infografis",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi infografis",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, >75% infografis disusun oleh Agen Statistik" },
+        { "skor": 3, "label": "Ya, 50–75% infografis disusun oleh Agen Statistik" },
+        { "skor": 2, "label": "Ya, ≤50% infografis disusun oleh Agen Statistik" },
+        { "skor": 1, "label": "Tidak, seluruh infografis disusun oleh BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "19A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi tayang infografis di PSV",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data tayang infografis di PSV",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "19B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi infografis dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "20",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Persentase penyusun video",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi video",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, >75% video disusun oleh Agen Statistik" },
+        { "skor": 3, "label": "Ya, 50–75% video disusun oleh Agen Statistik" },
+        { "skor": 2, "label": "Ya, ≤50% video disusun oleh Agen Statistik" },
+        { "skor": 1, "label": "Tidak, seluruh video disusun oleh BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "21A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi videografis tayang di PSV",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data tayang video di PSV",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "21B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi videografis dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "22",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Kegiatan Edukasi Statistik yang diselenggarakan oleh Pojok Statistik",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi kegiatan Edukasi Statistik",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ada, berkaitan dengan Promosi Data BPS, Pemanfaatan Data BPS bagi perguruan tinggi dan Pembangunan Statistik bagi Pemerintah dan Masyarakat" },
+        { "skor": 3, "label": "Ada, berkaitan dengan Promosi Data BPS dan Pembangunan Statistik bagi Pemerintah dan Masyarakat" },
+        { "skor": 2, "label": "Ada, berkaitan dengan Promosi Data BPS dan Pemanfaatan Data BPS bagi perguruan tinggi" },
+        { "skor": 1, "label": "Ada, berkaitan dengan Promosi Data BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "23A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi Kegiatan Edukasi Statistik",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data frekuensi kegiatan edukasi statistik",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "23B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi Edukasi Statistik dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "24",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama (35% − 26% = 9% ÷ 3 butir).",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "25",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "26",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Layanan konsultasi statistik (butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Hal. 9: layanan konsultasi dilaksanakan secara terjadwal; bila ada penyesuaian karena hari libur/jeda akademik wajib disertai kalender akademik resmi Perguruan Tinggi.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "27",
+      "aspekId": "kegiatan_tambahan",
+      "pertanyaan": "Apakah ada kegiatan lain yang diselenggarakan dalam program Pojok Statistik?",
+      "tipeInput": "jumlah_plus1",
+      "inputRange": { "min": 0, "max": 3 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kegiatan tambahan",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "jenisKegiatan": [
+        "Joint Research",
+        "Kegiatan MSIB/Magang",
+        "Kegiatan BPS lainnya: Maha Cantik, pendataan/survei, penyusunan publikasi"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "Menyelenggarakan 3 macam atau lebih kegiatan lain", "jumlah": 3 },
+        { "skor": 3, "label": "Menyelenggarakan 2 macam kegiatan lain", "jumlah": 2 },
+        { "skor": 2, "label": "Menyelenggarakan 1 macam kegiatan lain", "jumlah": 1 },
+        { "skor": 1, "label": "Tidak ada", "jumlah": 0 }
+      ],
+      "caraPengisian": "Isi jumlah macam/tahap yang ada (0–3). Skor = jumlah + 1."
+    },
+    {
+      "no": "28",
+      "aspekId": "kolaborasi_pembiayaan",
+      "pertanyaan": "Apakah terdapat kolaborasi pembiayaan dalam penyelenggaraan Pojok Statistik?",
+      "tipeInput": "jumlah_plus1",
+      "inputRange": { "min": 0, "max": 3 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi pembiayaan",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": false,
+      "jenisKegiatan": [
+        "Kolaborasi pembiayaan pada saat proses inisiasi dan pembentukan",
+        "Kolaborasi pembiayaan pada saat peresmian",
+        "Kolaborasi pembiayaan pada operasional kegiatan"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "Kolaborasi pembiayaan pada semua tahap kegiatan Pojok Statistik", "jumlah": 3 },
+        { "skor": 3, "label": "Kolaborasi pembiayaan pada dua tahap kegiatan Pojok Statistik", "jumlah": 2 },
+        { "skor": 2, "label": "Kolaborasi pembiayaan pada salah satu tahap kegiatan Pojok Statistik", "jumlah": 1 },
+        { "skor": 1, "label": "Tidak, pembiayaan disediakan oleh salah satu pihak BPS/Perguruan Tinggi", "jumlah": 0 }
+      ],
+      "caraPengisian": "Isi jumlah macam/tahap yang ada (0–3). Skor = jumlah + 1."
+    },
+    {
+      "no": "29",
+      "aspekId": "kolaborasi_bps",
+      "pertanyaan": "Kolaborasi dengan Program Pembangunan Statistik di Tingkat Desa",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi statistik tingkat desa",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": true,
+      "catatan": "Hal. 10: kegiatan Pojok Statistik yang mendukung pembangunan statistik tingkat desa/kelurahan (mis. KKN, pelatihan pengolahan data untuk aparat desa). Nomor, redaksi, dan bobot diperkirakan.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "30",
+      "aspekId": "kolaborasi_bps",
+      "pertanyaan": "Kolaborasi dengan Pembinaan Statistik Sektoral",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi pembinaan statistik sektoral",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": true,
+      "catatan": "Hal. 10: kegiatan Pojok Statistik yang berdampak langsung pada percepatan Pembinaan Statistik Sektoral (mis. agen statistik sebagai pemateri di OPD, asistensi pengisian metadata). Nomor, redaksi, dan bobot diperkirakan.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    }
+  ],
+
+  "lampiran2_threshold": {
+    "keterangan": "Batas minimal frekuensi tayang untuk butir 19A, 21A, 23A. Periode Agustus 2025 – Juli 2026.",
+    "berlakuUntukButir": ["19A", "21A", "23A"],
+    "data": [
+      { "periode": "Harian",      "jumlahPeriode": 365, "threshold": 0.75, "batasMinimal": 274, "batasMaksimal": 365 },
+      { "periode": "Mingguan",    "jumlahPeriode": 52,  "threshold": 0.75, "batasMinimal": 39,  "batasMaksimal": 52 },
+      { "periode": "Bulanan",     "jumlahPeriode": 12,  "threshold": 0.75, "batasMinimal": 9,   "batasMaksimal": 12 },
+      { "periode": "Triwulanan",  "jumlahPeriode": 4,   "threshold": 0.75, "batasMinimal": 3,   "batasMaksimal": 4 },
+      { "periode": "Semesteran",  "jumlahPeriode": 2,   "threshold": 0.75, "batasMinimal": 2,   "batasMaksimal": 2 },
+      { "periode": "Tentatif",    "jumlahPeriode": null, "threshold": null, "batasMinimal": null, "batasMaksimal": null }
+    ]
+  },
+
+  "lampiran3_skorKesesuaian": {
+    "keterangan": "Tabel skor kesesuaian realisasi dengan target RPK. Dipakai untuk butir 19B, 21B, 23B.",
+    "berlakuUntukButir": ["19B", "21B", "23B"],
+    "pitaRealisasi": ["0", "1-25", "26-49", ">=50"],
+    "pitaRealisasiLogic": [
+      { "id": "0",     "label": "0%",     "kondisi": "realisasi === 0" },
+      { "id": "1-25",  "label": "1–25%",  "kondisi": "realisasi > 0 && realisasi <= 25" },
+      { "id": "26-49", "label": "26–49%", "kondisi": "realisasi > 25 && realisasi < 50" },
+      { "id": ">=50",  "label": "≥50%",   "kondisi": "realisasi >= 50" }
+    ],
+    "data": [
+      { "targetPeriode": "Tentatif",     "skor": [1,   1,   1,   1  ], "maksimalSkor": 1   },
+      { "targetPeriode": "Semesteran",   "skor": [1,   1.2, 1.4, 1.5], "maksimalSkor": 1.5 },
+      { "targetPeriode": "Triwulanan",   "skor": [1,   1.7, 1.9, 2  ], "maksimalSkor": 2   },
+      { "targetPeriode": "Bulanan",      "skor": [1,   2.2, 2.4, 2.5], "maksimalSkor": 2.5 },
+      { "targetPeriode": "Mingguan",     "skor": [1,   2.7, 2.9, 3  ], "maksimalSkor": 3   },
+      { "targetPeriode": "Harian",       "skor": [1,   3.3, 3.6, 4  ], "maksimalSkor": 4   }
+    ],
+    "targetPeriodeOptions": ["Tentatif", "Semesteran", "Triwulanan", "Bulanan", "Mingguan", "Harian"]
+  },
+
+  "kategoriZona": [
+    { "zona": "hijau",  "label": "Zona Hijau",  "keterangan": "Kinerja Tinggi",  "batasBawah": 2.67, "batasAtas": 4.00, "warna": "#22c55e" },
+    { "zona": "kuning", "label": "Zona Kuning", "keterangan": "Kinerja Sedang",  "batasBawah": 1.34, "batasAtas": 2.66, "warna": "#eab308" },
+    { "zona": "merah",  "label": "Zona Merah",  "keterangan": "Kinerja Rendah",  "batasBawah": 0.00, "batasAtas": 1.33, "warna": "#ef4444" }
+  ],
+
+  "rumus": {
+    "skorButir": {
+      "checklist": "MAX(1, jumlahItemTerpenuhi)",
+      "pilihan": "inputSkor",
+      "frekuensi": "inputSkor",
+      "lampiran3": "INDEX(tabelLampiran3, MATCH(targetPeriode), pitaRealisasi(persenRealisasi))",
+      "jumlah_plus1": "MIN(4, jumlahInput + 1)"
+    },
+    "skorTernormalisasi": "(skor - min) / (max - min)",
+    "bobotButirMetode1": "bobotAspek / jumlahButirDalamAspek",
+    "bobotButirMetode2": "bobotTercetak",
+    "kontribusiButir": "skorTernormalisasi * bobotButir * 4",
+    "ipotik": "SUM(semuaKontribusiButir)",
+    "kategori": "Dibulatkan ke 2 desimal, lalu dicocokkan dengan tabel kategoriZona"
+  },
+
+  "opsiDropdown": {
+    "skor1_4": [4, 3, 2, 1],
+    "skorFrekuensi": [4, 3, 2.5, 2, 1.5, 1],
+    "jumlah0_4": [0, 1, 2, 3, 4],
+    "jumlah0_3": [0, 1, 2, 3],
+    "targetPeriodeRPK": ["Tentatif", "Semesteran", "Triwulanan", "Bulanan", "Mingguan", "Harian"]
+  }
+}
+  </script>
+
+  <script>
+    // Inlined engine fallback for offline/file:// double-click support
+    window.__IPOTIK_FALLBACK_ENGINE__ = (function() {
+      /**
+ * IPotik Scoring Engine
+ * =====================
+ * Mesin penghitung Indeks Pojok Statistik (IPotik) 2026.
+ * Mereplikasi seluruh logika rumus pada file Excel
+ * Penilaian_Monev_Pojok_Statistik_2026.xlsx
+ *
+ * Dipakai oleh website simulator — import file ini
+ * lalu panggil fungsi-fungsi yang tersedia.
+ */
+
+// ──────────────────────────────────────────────
+// 1. LOOKUP TABLE — Lampiran 3 (Skor Kesesuaian)
+// ──────────────────────────────────────────────
+//
+// Baris  = target periode RPK (urut sesuai Excel)
+// Kolom  = pita realisasi: [0%, 1–25%, 26–49%, ≥50%]
+//
+const LAMPIRAN3 = {
+  "Tentatif":    [1,   1,   1,   1  ],
+  "Semesteran":  [1,   1.2, 1.4, 1.5],
+  "Triwulanan":  [1,   1.7, 1.9, 2  ],
+  "Bulanan":     [1,   2.2, 2.4, 2.5],
+  "Mingguan":    [1,   2.7, 2.9, 3  ],
+  "Harian":      [1,   3.3, 3.6, 4  ],
+};
+
+// ──────────────────────────────────────────────
+// 2. HELPER — tentukan kolom pita realisasi
+// ──────────────────────────────────────────────
+
+/**
+ * Mengembalikan index kolom (0–3) pada tabel Lampiran 3
+ * berdasarkan persentase realisasi.
+ *
+ * @param {number} persen — 0 sampai 100
+ * @returns {number} 0 | 1 | 2 | 3
+ */
+function pitaRealisasiIndex(persen) {
+  if (persen === 0)           return 0; // 0%
+  if (persen <= 25)           return 1; // 1–25%
+  if (persen < 50)            return 2; // 26–49%
+  /* persen >= 50 */          return 3; // ≥50%
+}
+
+// ──────────────────────────────────────────────
+// 3. HITUNG SKOR BUTIR (kolom I pada Excel)
+// ──────────────────────────────────────────────
+
+/**
+ * Menghitung skor mentah satu butir berdasarkan tipe input-nya.
+ *
+ * @param {Object} butir   — definisi butir dari ipotik-config.json
+ * @param {*}      input   — nilai yang diisi pengguna (kolom G)
+ * @param {string} [targetPeriode] — khusus tipe lampiran3 (kolom H)
+ * @returns {number|null}  — skor (1–4), atau null jika belum diisi
+ */
+function hitungSkorButir(butir, input, targetPeriode) {
+  // Belum diisi → null (dihitung 0 pada kontribusi)
+  if (input === null || input === undefined || input === "") return null;
+
+  switch (butir.tipeInput) {
+    // ── Checklist: skor = jumlah item, minimal 1 ──
+    case "checklist":
+      return Math.max(1, Number(input));
+
+    // ── Pilihan tunggal / frekuensi: langsung pakai ──
+    case "pilihan":
+    case "frekuensi":
+      return Number(input);
+
+    // ── Lampiran 3: lookup otomatis ──
+    case "lampiran3": {
+      if (!targetPeriode) return null;
+      const persen = Number(input);
+      const kolom  = pitaRealisasiIndex(persen);
+      const baris  = LAMPIRAN3[targetPeriode];
+      if (!baris) return null;
+      return baris[kolom];
+    }
+
+    // ── Jumlah + 1: skor = MIN(4, jumlah + 1) ──
+    case "jumlah_plus1":
+      return Math.min(4, Number(input) + 1);
+
+    default:
+      return Number(input);
+  }
+}
+
+// ──────────────────────────────────────────────
+// 4. NORMALISASI (kolom L pada Excel)
+// ──────────────────────────────────────────────
+
+/**
+ * Normalisasi skor ke rentang 0–1.
+ * Rumus: (skor − min) ÷ (maks − min)
+ *
+ * @param {number} skor
+ * @param {number} min  — selalu 1 pada instrumen ini
+ * @param {number} maks — selalu 4 pada instrumen ini
+ * @returns {number} 0 ≤ hasil ≤ 1
+ */
+function normalisasi(skor, min = 1, maks = 4) {
+  if (maks === min) return 0;
+  return (skor - min) / (maks - min);
+}
+
+// ──────────────────────────────────────────────
+// 5. BOBOT BUTIR (kolom N pada Excel)
+// ──────────────────────────────────────────────
+
+/**
+ * Menghitung bobot butir berdasarkan metode yang dipilih.
+ *
+ * @param {Object} butir    — definisi butir
+ * @param {Object} aspek    — definisi aspek yang memuat butir ini
+ * @param {number} metode   — 1 = rumus resmi, 2 = bobot tercetak
+ * @returns {number}
+ */
+function bobotButir(butir, aspek, metode) {
+  if (metode === 2) {
+    return butir.bobotTercetak;
+  }
+  // Metode 1 (default): bobot aspek ÷ jumlah butir dalam aspek
+  return aspek.bobot / aspek.jumlahButir;
+}
+
+// ──────────────────────────────────────────────
+// 6. KONTRIBUSI BUTIR (kolom O pada Excel)
+// ──────────────────────────────────────────────
+
+/**
+ * Kontribusi satu butir ke IPotik.
+ * Rumus: skorTernormalisasi × bobot × 4
+ * Jika butir belum diisi → kontribusi = 0.
+ *
+ * @param {number|null} skor
+ * @param {number}      bobot
+ * @param {number}      min
+ * @param {number}      maks
+ * @returns {number}
+ */
+function kontribusiButir(skor, bobot, min = 1, maks = 4) {
+  if (skor === null || skor === undefined) return 0;
+  const norm = normalisasi(skor, min, maks);
+  return norm * bobot * 4;
+}
+
+// ──────────────────────────────────────────────
+// 7. KATEGORI ZONA
+// ──────────────────────────────────────────────
+
+const ZONA = [
+  { zona: "hijau",  label: "Zona Hijau",  keterangan: "Kinerja Tinggi", batasBawah: 2.67, batasAtas: 4.00, warna: "#22c55e" },
+  { zona: "kuning", label: "Zona Kuning", keterangan: "Kinerja Sedang", batasBawah: 1.34, batasAtas: 2.66, warna: "#eab308" },
+  { zona: "merah",  label: "Zona Merah",  keterangan: "Kinerja Rendah", batasBawah: 0.00, batasAtas: 1.33, warna: "#ef4444" },
+];
+
+/**
+ * Menentukan kategori zona berdasarkan nilai IPotik.
+ * IPotik dibulatkan ke 2 desimal sebelum dicocokkan.
+ *
+ * @param {number} ipotik
+ * @returns {Object} { zona, label, keterangan, warna }
+ */
+function tentukanZona(ipotik) {
+  const rounded = Math.round(ipotik * 100) / 100;
+  if (rounded >= 2.67) return ZONA[0]; // Hijau (2.67 – 4.00)
+  if (rounded >= 1.34) return ZONA[1]; // Kuning (1.34 – 2.66)
+  return ZONA[2];                      // Merah (0.00 – 1.33)
+}
+
+// ──────────────────────────────────────────────
+// 8. HITUNG IPOTIK LENGKAP (master function)
+// ──────────────────────────────────────────────
+
+/**
+ * Menghitung IPotik lengkap dari seluruh jawaban pengguna.
+ *
+ * @param {Object}   config     — isi ipotik-config.json
+ * @param {Object}   jawaban    — { [noButir]: { input, targetPeriode? } }
+ *                                Contoh: { "1": { input: 3 }, "19B": { input: 80, targetPeriode: "Bulanan" } }
+ * @param {number}   [metode=1] — 1 = rumus resmi, 2 = bobot tercetak
+ * @returns {Object} hasil perhitungan lengkap
+ */
+function hitungIPotik(config, jawaban, metode = 1) {
+  const aspekMap = {};
+  for (const a of config.aspek) {
+    aspekMap[a.id] = a;
+  }
+
+  let totalIPotik = 0;
+  let butirTerisi = 0;
+
+  // Detail per butir
+  const detailButir = config.butir.map((b) => {
+    const j       = jawaban[b.no] || {};
+    const input   = j.input ?? null;
+    const target  = j.targetPeriode ?? null;
+    const aspek   = aspekMap[b.aspekId];
+    const skor    = hitungSkorButir(b, input, target);
+    const bobot   = bobotButir(b, aspek, metode);
+    const kontrib = kontribusiButir(skor, bobot, b.skorRange.min, b.skorRange.max);
+
+    if (skor !== null) butirTerisi++;
+    totalIPotik += kontrib;
+
+    return {
+      no: b.no,
+      aspekId: b.aspekId,
+      pertanyaan: b.pertanyaan,
+      tipeInput: b.tipeInput,
+      input,
+      targetPeriode: target,
+      skor,
+      skorTernormalisasi: skor !== null ? normalisasi(skor, b.skorRange.min, b.skorRange.max) : null,
+      bobot,
+      kontribusi: kontrib,
+    };
+  });
+
+  // Rekap per aspek (sesuai rumus Excel: SUMIF(norm) / jumlahButirAspek)
+  const rekapAspek = config.aspek.map((a) => {
+    const butirDalamAspek = detailButir.filter((d) => d.aspekId === a.id);
+    const kontribTotal    = butirDalamAspek.reduce((sum, d) => sum + d.kontribusi, 0);
+    const terisi          = butirDalamAspek.filter((d) => d.skor !== null).length;
+    const normValues      = butirDalamAspek
+      .filter((d) => d.skorTernormalisasi !== null)
+      .map((d) => d.skorTernormalisasi);
+    const sumNorm         = normValues.reduce((acc, v) => acc + v, 0);
+    // Sesuai rumus resmi hal. 13 & Excel sel N11–N20: rata-rata ternormalisasi terhadap total butir aspek
+    const skorAspek       = a.jumlahButir > 0 ? sumNorm / a.jumlahButir : 0;
+    // Rata-rata hanya dari butir yang sudah terisi (informasi tambahan untuk UI)
+    const skorAspekTerisi = terisi > 0 ? sumNorm / terisi : 0;
+
+    return {
+      id: a.id,
+      nama: a.nama,
+      dimensiId: a.dimensiId,
+      bobot: a.bobot,
+      jumlahButir: a.jumlahButir,
+      butirTerisi: terisi,
+      skorAspek: Math.round(skorAspek * 10000) / 10000,
+      skorAspekTerisi: Math.round(skorAspekTerisi * 10000) / 10000,
+      kontribusi: Math.round(kontribTotal * 10000) / 10000,
+    };
+  });
+
+  // Rekap per dimensi
+  const rekapDimensi = config.dimensi.map((d) => {
+    const aspekDalamDimensi = rekapAspek.filter((a) => a.dimensiId === d.id);
+    const kontrib = aspekDalamDimensi.reduce((sum, a) => sum + a.kontribusi, 0);
+    const kontribMaks = d.bobot * 4;
+    const persen  = kontribMaks > 0 ? (kontrib / kontribMaks) * 100 : 0;
+
+    return {
+      id: d.id,
+      nama: d.nama,
+      bobot: d.bobot,
+      kontribusi: Math.round(kontrib * 10000) / 10000,
+      kontribusiMaksimal: kontribMaks,
+      persenCapaian: Math.round(persen * 100) / 100,
+    };
+  });
+
+  const ipotikRounded = Math.round(totalIPotik * 100) / 100;
+  const zona = tentukanZona(totalIPotik);
+
+  return {
+    ipotik: ipotikRounded,
+    zona,
+    butirTerisi,
+    totalButir: config.butir.length,
+    metode,
+    detailButir,
+    rekapAspek,
+    rekapDimensi,
+  };
+}
+
+// ──────────────────────────────────────────────
+// EXPORTS
+// ──────────────────────────────────────────────
+      return {
+        LAMPIRAN3,
+        ZONA,
+        pitaRealisasiIndex,
+        hitungSkorButir,
+        normalisasi,
+        bobotButir,
+        kontribusiButir,
+        tentukanZona,
+        hitungIPotik,
+      };
+    })();
+  </script>
+
+  <!-- APP SCRIPT -->
+  <script type="module">
+    // AUTHENTICATION
+    const AUTH_KEY = 'ipotik_auth_user';
+    const loginView = document.getElementById('login-view');
+    const appView = document.getElementById('app-view');
+    const loginForm = document.getElementById('login-form');
+    const loginUser = document.getElementById('login-username');
+    const loginPass = document.getElementById('login-password');
+    const loginErr = document.getElementById('login-error');
+    const userDisplay = document.getElementById('user-display');
+    const btnLogout = document.getElementById('btn-logout');
+
+    let isAppInitialized = false;
+
+    function checkAuth() {
+      const user = sessionStorage.getItem(AUTH_KEY);
+      if (user) {
+        loginView.style.display = 'none';
+        appView.style.display = 'block';
+        if (userDisplay) userDisplay.textContent = user;
+        if (!isAppInitialized) {
+          initApp();
+          isAppInitialized = true;
+        } else {
+          populateFormValues();
+          saveAndRecalculate();
+        }
+      } else {
+        loginView.style.display = 'flex';
+        appView.style.display = 'none';
+      }
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = loginUser.value.trim();
+      const p = loginPass.value.trim();
+      if (!u || !p) {
+        loginErr.textContent = 'Username dan password wajib diisi';
+        loginErr.style.display = 'block';
+        return;
+      }
+      sessionStorage.setItem(AUTH_KEY, u);
+      loginErr.style.display = 'none';
+      loginForm.reset();
+      checkAuth();
+    });
+
+    btnLogout.addEventListener('click', () => {
+      sessionStorage.removeItem(AUTH_KEY);
+      checkAuth();
+    });
+
+    // CONFIG & ENGINE LOADER
+    let config;
+    let engine;
+
+    try {
+      if (window.location.protocol.startsWith('http')) {
+        const [engMod, resJson] = await Promise.all([
+          import('./data/ipotik-engine.js'),
+          fetch('./data/ipotik-config.json').then(r => r.json())
+        ]);
+        engine = engMod;
+        config = resJson;
+      }
+    } catch (e) {
+      console.warn('HTTP dynamic fetch failed, using embedded fallback:', e);
+    }
+
+    if (!config) {
+      config = JSON.parse(document.getElementById('ipotik-config-fallback').textContent);
+    }
+    if (!engine) {
+      engine = window.__IPOTIK_FALLBACK_ENGINE__;
+    }
+
+    // STATE
+    const STORAGE_KEY = 'ipotik_simulator_answers_v2026';
+    const METHOD_KEY = 'ipotik_simulator_method_v2026';
+
+    let metode = parseInt(localStorage.getItem(METHOD_KEY) || '1', 10);
+    let jawaban = {};
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) jawaban = JSON.parse(saved);
+    } catch (e) {
+      jawaban = {};
+    }
+
+    // DOM ELEMENTS
+    const grandScoreEl = document.getElementById('grand-score');
+    const scoreScaleEl = document.getElementById('score-scale');
+    const zonaBadgeEl = document.getElementById('zona-badge');
+    const zonaTextEl = document.getElementById('zona-text');
+    const zonaDotEl = document.getElementById('zona-dot');
+    const progressTextEl = document.getElementById('progress-text');
+    const progressFillEl = document.getElementById('progress-fill');
+    const progressBarEl = document.getElementById('progress-bar');
+    const methodSelectEl = document.getElementById('method-select');
+    const dimensiGridEl = document.getElementById('dimensi-summary-grid');
+    const formContainerEl = document.getElementById('form-container');
+    const printDateEl = document.getElementById('print-date');
+    const printSummaryEl = document.getElementById('print-score-summary');
+
+    if (printDateEl) {
+      printDateEl.textContent = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+    }
+    methodSelectEl.value = metode;
+
+    function initApp() {
+      renderApp();
+      populateFormValues();
+      saveAndRecalculate();
+    }
+
+    // RENDER FORMULIR
+    function renderApp() {
+      const aspekByDimensi = {};
+      config.aspek.forEach(a => {
+        if (!aspekByDimensi[a.dimensiId]) aspekByDimensi[a.dimensiId] = [];
+        aspekByDimensi[a.dimensiId].push(a);
+      });
+
+      const butirByAspek = {};
+      config.butir.forEach(b => {
+        if (!butirByAspek[b.aspekId]) butirByAspek[b.aspekId] = [];
+        butirByAspek[b.aspekId].push(b);
+      });
+
+      formContainerEl.innerHTML = '';
+
+      config.dimensi.forEach((dim, dimIdx) => {
+        const dimBlock = document.createElement('div');
+        dimBlock.className = 'dimensi-block';
+        dimBlock.id = 'section-' + dim.id;
+
+        const dimHeader = document.createElement('div');
+        dimHeader.className = 'dimensi-header';
+        dimHeader.innerHTML = `
+          <h2>Dimensi ${dimIdx + 1}: ${dim.nama}</h2>
+          <span class="dimensi-badge">Bobot: ${Math.round(dim.bobot * 100)}% &bull; Kontribusi Maks: ${dim.bobot * 4}</span>
+        `;
+        dimBlock.appendChild(dimHeader);
+
+        const aspeks = aspekByDimensi[dim.id] || [];
+        aspeks.forEach(asp => {
+          const aspBlock = document.createElement('div');
+          aspBlock.className = 'aspek-block';
+
+          const aspHdr = document.createElement('div');
+          aspHdr.className = 'aspek-header';
+          aspHdr.innerHTML = `
+            <div class="aspek-title">${asp.nama}</div>
+            <div class="aspek-meta">
+              <span>Bobot: ${(asp.bobot * 100).toFixed(1)}%</span>
+              <span>Jumlah: ${asp.jumlahButir} Butir</span>
+              <span id="aspek-skor-${asp.id}">Skor: 0.00</span>
+            </div>
+          `;
+          aspBlock.appendChild(aspHdr);
+
+          const butirs = butirByAspek[asp.id] || [];
+          butirs.forEach(b => {
+            const card = renderButirCard(b, asp);
+            aspBlock.appendChild(card);
+          });
+
+          dimBlock.appendChild(aspBlock);
+        });
+
+        formContainerEl.appendChild(dimBlock);
+      });
+    }
+
+    // RENDER CARD BUTIR
+    function renderButirCard(b, asp) {
+      const card = document.createElement('div');
+      card.className = 'butir-card';
+      card.id = 'card-butir-' + b.no;
+
+      const hdr = document.createElement('div');
+      hdr.className = 'butir-header';
+      hdr.innerHTML = `
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="butir-number">Butir ${b.no}</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Bobot: ${(b.bobotTercetak * 100).toFixed(1)}%</span>
+        </div>
+        <div class="butir-score-badge" id="badge-${b.no}">
+          <span>Skor: -</span>
+        </div>
+      `;
+      card.appendChild(hdr);
+
+      const q = document.createElement('div');
+      q.className = 'butir-question';
+      q.id = 'question-' + b.no;
+      q.textContent = b.pertanyaan;
+      card.appendChild(q);
+
+      if (b.buktiDukung || b.caraPengisian || b.contohLink) {
+        const details = document.createElement('details');
+        details.className = 'bukti-box';
+        let linkHtml = '';
+        if (b.contohLink) {
+          const cleanLink = b.contohLink.startsWith('http') ? b.contohLink : 'https://' + b.contohLink;
+          linkHtml = `<div style="margin-top:4px;"><strong>Contoh Bukti:</strong> <a href="${cleanLink}" target="_blank" rel="noopener">${b.contohLink}</a></div>`;
+        }
+        details.innerHTML = `
+          <summary>Bukti Dukung & Panduan Pengisian</summary>
+          <div class="bukti-content">
+            ${b.buktiDukung ? `<div><strong>Bukti Dukung:</strong> ${b.buktiDukung}</div>` : ''}
+            ${b.caraPengisian ? `<div style="margin-top:2px;"><strong>Petunjuk:</strong> ${b.caraPengisian}</div>` : ''}
+            ${linkHtml}
+          </div>
+        `;
+        card.appendChild(details);
+      }
+
+      const inputWrap = document.createElement('div');
+      inputWrap.className = 'input-container';
+      inputWrap.setAttribute('role', 'group');
+      inputWrap.setAttribute('aria-labelledby', q.id);
+
+      if (b.tipeInput === 'checklist') {
+        const group = document.createElement('div');
+        group.className = 'checklist-group';
+        (b.checklistItems || []).forEach((item, idx) => {
+          const label = document.createElement('label');
+          label.className = 'check-item';
+          const chk = document.createElement('input');
+          chk.type = 'checkbox';
+          chk.name = 'butir-' + b.no;
+          chk.setAttribute('autocomplete', 'off');
+          chk.dataset.no = b.no;
+          chk.dataset.idx = idx;
+          chk.addEventListener('change', () => onChecklistChange(b));
+
+          const txt = document.createElement('span');
+          txt.textContent = item;
+
+          label.appendChild(chk);
+          label.appendChild(txt);
+          group.appendChild(label);
+        });
+        inputWrap.appendChild(group);
+
+      } else if (b.tipeInput === 'pilihan' || b.tipeInput === 'frekuensi' || b.tipeInput === 'jumlah_plus1') {
+        const group = document.createElement('div');
+        group.className = 'radio-group';
+        (b.rubrik || []).forEach(opt => {
+          const label = document.createElement('label');
+          label.className = 'radio-item';
+          const rdo = document.createElement('input');
+          rdo.type = 'radio';
+          rdo.name = 'radio-' + b.no;
+          rdo.setAttribute('autocomplete', 'off');
+          rdo.value = b.tipeInput === 'jumlah_plus1' ? opt.jumlah : opt.skor;
+          rdo.dataset.no = b.no;
+          rdo.addEventListener('change', () => onRadioChange(b, rdo.value));
+
+          const txt = document.createElement('span');
+          txt.textContent = opt.label;
+
+          const tag = document.createElement('span');
+          tag.className = 'radio-score-tag';
+          tag.textContent = 'Skor ' + opt.skor;
+
+          label.appendChild(rdo);
+          label.appendChild(txt);
+          label.appendChild(tag);
+          group.appendChild(label);
+        });
+        inputWrap.appendChild(group);
+
+      } else if (b.tipeInput === 'lampiran3') {
+        const l3 = document.createElement('div');
+        l3.className = 'lampiran3-wrap';
+
+        const f1 = document.createElement('div');
+        f1.className = 'form-field';
+        f1.innerHTML = `<label for="sel-periode-${b.no}">Target Periode di RPK:</label>`;
+        const sel = document.createElement('select');
+        sel.id = 'sel-periode-' + b.no;
+        sel.name = 'periode-' + b.no;
+        sel.innerHTML = `
+          <option value="">-- Pilih Target Periode --</option>
+          <option value="Harian">Harian</option>
+          <option value="Mingguan">Mingguan</option>
+          <option value="Bulanan">Bulanan</option>
+          <option value="Triwulanan">Triwulanan</option>
+          <option value="Semesteran">Semesteran</option>
+          <option value="Tentatif">Tentatif</option>
+        `;
+        sel.addEventListener('change', () => onLampiran3Change(b));
+        f1.appendChild(sel);
+        l3.appendChild(f1);
+
+        const f2 = document.createElement('div');
+        f2.className = 'form-field';
+        f2.innerHTML = `<label for="num-persen-${b.no}">Realisasi (%):</label>`;
+        const sRow = document.createElement('div');
+        sRow.className = 'slider-row';
+
+        const rng = document.createElement('input');
+        rng.type = 'range';
+        rng.min = '0';
+        rng.max = '100';
+        rng.value = '0';
+        rng.id = 'rng-persen-' + b.no;
+        rng.name = 'realisasi-slider-' + b.no;
+        rng.setAttribute('autocomplete', 'off');
+        rng.setAttribute('aria-label', 'Realisasi dalam persen');
+
+        const num = document.createElement('input');
+        num.type = 'number';
+        num.min = '0';
+        num.max = '100';
+        num.value = '0';
+        num.style.width = '70px';
+        num.id = 'num-persen-' + b.no;
+        num.name = 'realisasi-' + b.no;
+        num.setAttribute('autocomplete', 'off');
+        num.setAttribute('aria-label', 'Realisasi dalam persen');
+
+        rng.addEventListener('input', () => {
+          num.value = rng.value;
+          onLampiran3Change(b);
+        });
+        num.addEventListener('input', () => {
+          let val = Math.max(0, Math.min(100, Number(num.value) || 0));
+          rng.value = val;
+          onLampiran3Change(b);
+        });
+
+        sRow.appendChild(rng);
+        sRow.appendChild(num);
+        f2.appendChild(sRow);
+        l3.appendChild(f2);
+
+        const prev = document.createElement('div');
+        prev.className = 'lampiran3-preview';
+        prev.id = 'prev-lampiran3-' + b.no;
+        prev.innerHTML = '<span>Pita Realisasi: Belum diisi</span><span>Skor Lampiran 3: -</span>';
+        l3.appendChild(prev);
+
+        inputWrap.appendChild(l3);
+      }
+
+      card.appendChild(inputWrap);
+      return card;
+    }
+
+    // EVENT HANDLERS
+    function onChecklistChange(b) {
+      const card = document.getElementById('card-butir-' + b.no);
+      const chks = card.querySelectorAll('input[type="checkbox"]');
+      let count = 0;
+      const checkedIdxs = [];
+      chks.forEach(c => {
+        const itemWrap = c.closest('.check-item');
+        if (c.checked) {
+          count++;
+          checkedIdxs.push(parseInt(c.dataset.idx, 10));
+          itemWrap.classList.add('checked');
+        } else {
+          itemWrap.classList.remove('checked');
+        }
+      });
+
+      if (checkedIdxs.length === 0) {
+        delete jawaban[b.no];
+      } else {
+        jawaban[b.no] = { input: count, items: checkedIdxs };
+      }
+      saveAndRecalculate();
+    }
+
+    function onRadioChange(b, val) {
+      jawaban[b.no] = { input: Number(val) };
+      const card = document.getElementById('card-butir-' + b.no);
+      card.querySelectorAll('.radio-item').forEach(lbl => {
+        const r = lbl.querySelector('input[type="radio"]');
+        if (r.checked) lbl.classList.add('selected');
+        else lbl.classList.remove('selected');
+      });
+      saveAndRecalculate();
+    }
+
+    function onLampiran3Change(b) {
+      const sel = document.getElementById('sel-periode-' + b.no);
+      const num = document.getElementById('num-persen-' + b.no);
+      const targetPeriode = sel.value;
+      const persen = Number(num.value);
+
+      if (!targetPeriode) {
+        delete jawaban[b.no];
+      } else {
+        jawaban[b.no] = { input: persen, targetPeriode };
+      }
+      saveAndRecalculate();
+    }
+
+    // RESTORE STATE TO UI
+    function populateFormValues() {
+      config.butir.forEach(b => {
+        const j = jawaban[b.no];
+        if (!j) return;
+
+        const card = document.getElementById('card-butir-' + b.no);
+        if (!card) return;
+
+        if (b.tipeInput === 'checklist') {
+          const chks = card.querySelectorAll('input[type="checkbox"]');
+          const savedItems = j.items || [];
+          chks.forEach(c => {
+            const idx = parseInt(c.dataset.idx, 10);
+            if (savedItems.includes(idx)) {
+              c.checked = true;
+              c.closest('.check-item')?.classList.add('checked');
+            }
+          });
+        } else if (b.tipeInput === 'pilihan' || b.tipeInput === 'frekuensi' || b.tipeInput === 'jumlah_plus1') {
+          const radios = card.querySelectorAll('input[type="radio"]');
+          radios.forEach(r => {
+            if (Number(r.value) === Number(j.input)) {
+              r.checked = true;
+              r.closest('.radio-item')?.classList.add('selected');
+            }
+          });
+        } else if (b.tipeInput === 'lampiran3') {
+          const sel = document.getElementById('sel-periode-' + b.no);
+          const num = document.getElementById('num-persen-' + b.no);
+          const rng = document.getElementById('rng-persen-' + b.no);
+          if (sel && j.targetPeriode) sel.value = j.targetPeriode;
+          if (num && j.input !== undefined) num.value = j.input;
+          if (rng && j.input !== undefined) rng.value = j.input;
+        }
+      });
+    }
+
+    // SAVE & RECALCULATE
+    function saveAndRecalculate() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(jawaban));
+      localStorage.setItem(METHOD_KEY, metode.toString());
+
+      const res = engine.hitungIPotik(config, jawaban, metode);
+      updateDashboard(res);
+    }
+
+    // UPDATE DASHBOARD
+    function updateDashboard(res) {
+      const hasAnswers = res.butirTerisi > 0;
+      grandScoreEl.textContent = hasAnswers ? res.ipotik.toFixed(2) : 'Belum dinilai';
+      grandScoreEl.classList.toggle('is-pending', !hasAnswers);
+      scoreScaleEl.hidden = !hasAnswers;
+      if (printSummaryEl) {
+        printSummaryEl.textContent = hasAnswers
+          ? `Indeks IPotik: ${res.ipotik.toFixed(2)} / 4.00 (${res.zona.label} - ${res.zona.keterangan})`
+          : 'Belum ada jawaban yang diisi.';
+      }
+
+      zonaBadgeEl.className = hasAnswers ? 'zona-pill zona-' + res.zona.zona : 'zona-pill zona-belum-dinilai';
+      zonaDotEl.hidden = !hasAnswers;
+      zonaTextEl.textContent = hasAnswers
+        ? `${res.zona.label} (${res.zona.keterangan})`
+        : 'Belum ada jawaban';
+
+      const pct = Math.round((res.butirTerisi / res.totalButir) * 100);
+      progressTextEl.textContent = `${res.butirTerisi} / ${res.totalButir} Butir (${pct}%)`;
+      progressFillEl.style.width = pct + '%';
+      progressBarEl.setAttribute('aria-valuenow', pct);
+
+      renderDimensiCards(res.rekapDimensi, hasAnswers);
+
+      res.rekapAspek.forEach(a => {
+        const el = document.getElementById('aspek-skor-' + a.id);
+        if (el) {
+          el.textContent = `Skor Aspek: ${a.skorAspek.toFixed(4)} | Kontribusi: +${a.kontribusi.toFixed(4)}`;
+        }
+      });
+
+      res.detailButir.forEach(d => {
+        const card = document.getElementById('card-butir-' + d.no);
+        const badge = document.getElementById('badge-' + d.no);
+        if (!card || !badge) return;
+
+        if (d.skor !== null) {
+          card.classList.add('has-value');
+          badge.classList.add('active');
+          badge.innerHTML = `
+            <span>Skor: <strong>${d.skor}</strong></span>
+            <span>Norm: ${d.skorTernormalisasi.toFixed(2)}</span>
+            <span>Kontrib: <strong>+${d.kontribusi.toFixed(4)}</strong></span>
+          `;
+        } else {
+          card.classList.remove('has-value');
+          badge.classList.remove('active');
+          badge.innerHTML = '<span>Belum diisi</span>';
+        }
+
+        if (d.tipeInput === 'lampiran3') {
+          const prev = document.getElementById('prev-lampiran3-' + d.no);
+          if (prev) {
+            if (d.targetPeriode && d.input !== null) {
+              const pita = engine.pitaRealisasiIndex(Number(d.input));
+              const pitaLabel = ['0%', '1–25%', '26–49%', '≥50%'][pita];
+              prev.innerHTML = `
+                <span>Pita Realisasi: <strong>${pitaLabel}</strong> (${d.input}%) &bull; Target: <strong>${d.targetPeriode}</strong></span>
+                <span>Skor Lampiran 3: <strong>${d.skor || '-'}</strong></span>
+              `;
+            } else {
+              prev.innerHTML = '<span>Pita Realisasi: Pilih target periode & realisasi</span><span>Skor Lampiran 3: -</span>';
+            }
+          }
+        }
+      });
+    }
+
+    // RENDER DIMENSI CARDS
+    function renderDimensiCards(rekapDimensi, hasAnswers) {
+      dimensiGridEl.innerHTML = '';
+      rekapDimensi.forEach(d => {
+        const card = document.createElement('a');
+        card.className = 'dimensi-card';
+        card.href = '#section-' + d.id;
+        card.innerHTML = `
+          <div class="dimensi-card-header">
+            <span>Dimensi</span>
+            <span>Bobot ${Math.round(d.bobot * 100)}%</span>
+          </div>
+          <div class="dimensi-card-title" title="${d.nama}">${d.nama}</div>
+          <div class="dimensi-card-score">
+            <span>${hasAnswers ? `${d.persenCapaian.toFixed(1)}%` : 'Belum dinilai'}</span>
+            <span class="dimensi-card-pct">Capaian</span>
+          </div>
+          <div class="progress-track" style="margin-top:6px;">
+            <div class="progress-fill" style="width: ${d.persenCapaian}%;"></div>
+          </div>
+          <div class="dimensi-card-sub">
+            Kontribusi: ${d.kontribusi.toFixed(3)} / ${d.kontribusiMaksimal.toFixed(2)}
+          </div>
+        `;
+        dimensiGridEl.appendChild(card);
+      });
+    }
+
+    // ACTIONS
+    methodSelectEl.addEventListener('change', () => {
+      metode = parseInt(methodSelectEl.value, 10);
+      saveAndRecalculate();
+    });
+
+    const scoreMoreToggle = document.getElementById('score-more-toggle');
+    const scoreActions = document.getElementById('score-actions');
+    scoreMoreToggle.addEventListener('click', () => {
+      const expanded = scoreMoreToggle.getAttribute('aria-expanded') === 'true';
+      scoreMoreToggle.setAttribute('aria-expanded', String(!expanded));
+      scoreActions.classList.toggle('is-open', !expanded);
+    });
+
+    document.getElementById('btn-max').addEventListener('click', () => {
+      if (!confirm('Isi semua butir dengan skor tertinggi? Jawaban saat ini akan diganti.')) return;
+      config.butir.forEach(b => {
+        if (b.tipeInput === 'checklist') {
+          jawaban[b.no] = {
+            input: b.checklistItems.length,
+            items: b.checklistItems.map((_, i) => i)
+          };
+        } else if (b.tipeInput === 'lampiran3') {
+          jawaban[b.no] = {
+            input: 100,
+            targetPeriode: 'Harian'
+          };
+        } else if (b.tipeInput === 'jumlah_plus1') {
+          jawaban[b.no] = { input: 3 };
+        } else {
+          jawaban[b.no] = { input: 4 };
+        }
+      });
+      renderApp();
+      populateFormValues();
+      saveAndRecalculate();
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      if (confirm('Apakah Anda yakin ingin mengosongkan seluruh jawaban simulator?')) {
+        jawaban = {};
+        localStorage.removeItem(STORAGE_KEY);
+        renderApp();
+        saveAndRecalculate();
+      }
+    });
+
+    document.getElementById('btn-print').addEventListener('click', () => {
+      window.print();
+    });
+
+    // START
+    // ponytail: hostname allowlist = local/dev; staging hosts need explicit add
+    if (!/^(localhost|127.0.0.1|)$/.test(location.hostname)) {
+      document.querySelector('.login-hint')?.remove();
+    }
+    checkAuth();
+  </script>
+</body>
+</html>

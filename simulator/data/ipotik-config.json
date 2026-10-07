@@ -1,0 +1,755 @@
+{
+  "meta": {
+    "title": "Penilaian Monev Pojok Statistik 2026",
+    "subtitle": "Indeks Pojok Statistik (IPotik)",
+    "sumber": "Panduan Monitoring dan Evaluasi Pojok Statistik 2026 (Lampiran 1–3, hal. 12–28)",
+    "cakupan": "Pojok Statistik aktif di Pojok Statistik Virtual s.d. 31 Juli 2026",
+    "periodeAktivitas": "Agustus 2025 – Juli 2026",
+    "skalaIPotik": { "min": 0, "max": 4 },
+    "jumlahButir": 33,
+    "metodeDefault": 1,
+    "keterangan": {
+      "metode1": "Rumus resmi hal. 13: tiap butir dalam satu aspek berbobot sama (bobot aspek ÷ jumlah butir)",
+      "metode2": "Bobot tercetak pada instrumen (ada perbedaan di aspek Kegiatan Utama)"
+    }
+  },
+
+  "dimensi": [
+    { "id": "kelembagaan",          "nama": "Kelembagaan",          "bobot": 0.10 },
+    { "id": "aksesibilitas",        "nama": "Aksesibilitas",        "bobot": 0.15 },
+    { "id": "kualitas_sdm",         "nama": "Kualitas SDM",         "bobot": 0.20 },
+    { "id": "efektivitas_kegiatan", "nama": "Efektivitas Kegiatan", "bobot": 0.40 },
+    { "id": "kolaborasi",           "nama": "Kolaborasi",           "bobot": 0.15 }
+  ],
+
+  "aspek": [
+    { "id": "dasar_hukum",           "nama": "Ketersediaan dan Kesesuaian Dasar Hukum", "dimensiId": "kelembagaan",          "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "rpk",                   "nama": "Ketersediaan Rencana Program Kerja",      "dimensiId": "kelembagaan",          "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "lokasi",                "nama": "Lokasi",                                  "dimensiId": "aksesibilitas",        "bobot": 0.02, "jumlahButir": 1 },
+    { "id": "ruangan_fasilitas",     "nama": "Ruangan dan Fasilitas",                   "dimensiId": "aksesibilitas",        "bobot": 0.13, "jumlahButir": 8 },
+    { "id": "keterlibatan_agen",     "nama": "Keterlibatan Agen Statistik",             "dimensiId": "kualitas_sdm",         "bobot": 0.10, "jumlahButir": 2 },
+    { "id": "pembinaan",             "nama": "Pembinaan dan Pengawasan",                "dimensiId": "kualitas_sdm",         "bobot": 0.10, "jumlahButir": 3 },
+    { "id": "kegiatan_utama",        "nama": "Kegiatan Utama",                          "dimensiId": "efektivitas_kegiatan", "bobot": 0.35, "jumlahButir": 13 },
+    { "id": "kegiatan_tambahan",     "nama": "Kegiatan Tambahan",                       "dimensiId": "efektivitas_kegiatan", "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "kolaborasi_pembiayaan", "nama": "Kolaborasi Pembiayaan",                   "dimensiId": "kolaborasi",           "bobot": 0.05, "jumlahButir": 1 },
+    { "id": "kolaborasi_bps",        "nama": "Kolaborasi dengan Kegiatan BPS Lainnya",  "dimensiId": "kolaborasi",           "bobot": 0.10, "jumlahButir": 2 }
+  ],
+
+  "butir": [
+    {
+      "no": "1",
+      "aspekId": "dasar_hukum",
+      "pertanyaan": "Apakah tersedia dasar hukum yang relevan?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumen MoU, PKS, SK Tim Pojok Statistik BPS, SK Koordinator Pojok Statistik Perguruan Tinggi",
+      "contohLink": "s.bps.go.id/PotikLegal",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia MoU yang relevan (tahun dan isi)",
+        "Tersedia PKS yang relevan (tahun dan isi)",
+        "Tersedia SK Tim Pojok Statistik BPS yang relevan (tahun dan isi)",
+        "Tersedia SK Koordinator Pojok Statistik Perguruan Tinggi yang relevan (tahun dan isi)"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "2",
+      "aspekId": "rpk",
+      "pertanyaan": "Apakah tersedia Rencana Program Kerja 2025?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "RPK yang diinput pada PSV dan/atau dokumen RPK yang dilegalisasi",
+      "contohLink": "s.bps.go.id/PotikLegal",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Sudah input dan upload file RPK" },
+        { "skor": 3, "label": "Sudah input RPK, namun tidak upload file" },
+        { "skor": 2, "label": "Tidak input RPK namun sudah upload file" },
+        { "skor": 1, "label": "Tidak input dan tidak upload file RPK" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "3",
+      "aspekId": "lokasi",
+      "pertanyaan": "Di mana lokasi Ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.02,
+      "buktiDukung": "Foto/video tampak luar yang menunjukkan posisi Pojok Statistik di Perguruan Tinggi",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Area Perpustakaan Utama Perguruan Tinggi" },
+        { "skor": 3, "label": "Area Gedung lain yang berada di bawah kewenangan Rektorat" },
+        { "skor": 2, "label": "Area Perpustakaan Fakultas" },
+        { "skor": 1, "label": "Area Gedung Perkuliahan yang berada di bawah kewenangan Fakultas" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "4",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Berapa luas ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Tersedia ruangan Pojok Statistik dengan luas lebih dari 20 m²" },
+        { "skor": 3, "label": "Tersedia ruangan Pojok Statistik dengan luas 16 m² – 20 m²" },
+        { "skor": 2, "label": "Tersedia ruangan Pojok Statistik dengan luas 11 m² – 15 m²" },
+        { "skor": 1, "label": "Tersedia ruang Pojok Statistik dengan luas kurang atau sama dengan 10 m²" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "5",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Apakah ruang Pojok Statistik telah memenuhi standar dekorasi?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia papan nama di luar ruangan yang memuat nama dan logo baik BPS maupun Perguruan Tinggi",
+        "Tersedia backdrop/spanduk background yang memuat tulisan: Pojok Statistik",
+        "Tersedia rak buku dengan bentuk Sigma",
+        "Nuansa ruangan mengacu pada nuansa warna Pojok Statistik"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "6",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Bagaimana kondisi jaringan listrik di ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Tersedia jaringan listrik dan selalu berfungsi" },
+        { "skor": 3, "label": "Tersedia jaringan listrik dan sering berfungsi" },
+        { "skor": 2, "label": "Tersedia jaringan listrik dan jarang berfungsi" },
+        { "skor": 1, "label": "Tidak tersedia jaringan listrik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "7",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Apakah ruang Pojok Statistik memiliki jaringan internet?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, tersedia WIFI dan LAN" },
+        { "skor": 3, "label": "Ya, tersedia WIFI" },
+        { "skor": 2, "label": "Ya, tersedia LAN" },
+        { "skor": 1, "label": "Tidak tersedia jaringan internet" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "8",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Bagaimana kondisi jaringan internet di ruang Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Jaringan internet selalu berfungsi" },
+        { "skor": 3, "label": "Jaringan internet sering berfungsi" },
+        { "skor": 2, "label": "Jaringan internet jarang berfungsi" },
+        { "skor": 1, "label": "Jaringan internet tidak berfungsi" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "9",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Fasilitas apa saja yang tersedia di area konsultasi statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia meja khusus untuk layanan konsultasi statistik",
+        "Tersedia kursi khusus untuk layanan konsultasi statistik",
+        "Tersedia komputer unit/laptop khusus untuk layanan Konsultasi Statistik",
+        "Tersedia komputer untuk mengakses buku tamu elektronik yang terintegrasi dengan buku tamu PST BPS"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "10",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Fasilitas apa saja yang tersedia di area literasi/area baca di Pojok Statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia meja baca di area literasi",
+        "Tersedia tempat duduk/bean bag di area literasi",
+        "Tersedia publikasi/buku yang dapat diakses oleh pengunjung",
+        "Tersedia rak buku"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "11",
+      "aspekId": "ruangan_fasilitas",
+      "pertanyaan": "Sarana promosi apa saja yang tersedia di ruang Pojok Statistik?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.01625,
+      "buktiDukung": "Dokumen atau foto yang menunjukkan setiap item fasilitas",
+      "contohLink": "s.bps.go.id/PotikAkses",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Tersedia media promosi digital berupa TV LED yang menampilkan informasi",
+        "Tersedia media promosi dalam bentuk Banner",
+        "Tersedia media promosi dalam bentuk Poster yang memuat informasi terkini",
+        "Tersedia media promosi dalam bentuk Leaflet"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "12",
+      "aspekId": "keterlibatan_agen",
+      "pertanyaan": "Apakah terdapat keterlibatan Mahasiswa dalam kegiatan Pojok Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "SK/Surat Tugas keterlibatan mahasiswa",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Terdapat pelibatan Mahasiswa Agen Statistik dengan Surat Keputusan/Surat Tugas Perguruan Tinggi" },
+        { "skor": 3, "label": "Terdapat pelibatan Mahasiswa Agen Statistik tanpa Surat Keputusan/Surat Tugas Perguruan Tinggi" },
+        { "skor": 2, "label": "Terdapat pelibatan Mahasiswa dalam kegiatan Pojok Statistik namun bukan sebagai Agen Statistik" },
+        { "skor": 1, "label": "Tidak ada pelibatan Mahasiswa dalam kegiatan Pojok Statistik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "13",
+      "aspekId": "keterlibatan_agen",
+      "pertanyaan": "Bagaimana mekanisme pemilihan/rekrutmen Agen Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumen proses rekrutmen/seleksi",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Dengan proses seleksi secara terbuka/diumumkan di media sosial/media kampus" },
+        { "skor": 3, "label": "Dengan proses seleksi secara tertutup" },
+        { "skor": 2, "label": "Penunjukan langsung oleh Perguruan Tinggi dengan Surat Keputusan/Surat Tugas" },
+        { "skor": 1, "label": "Penunjukan langsung oleh Perguruan Tinggi tanpa Surat Keputusan/Surat Tugas" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "14",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Apakah terdapat jadwal pembinaan Agen Statistik?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal dan dokumentasi pembinaan",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, terdapat jadwal Pembinaan Agen Statistik secara berkala dan terlaksana sesuai jadwal (100%)" },
+        { "skor": 3, "label": "Ya, terdapat jadwal Pembinaan Agen Statistik namun belum terlaksana sepenuhnya" },
+        { "skor": 2, "label": "Tidak terdapat jadwal, namun telah dilaksanakan Pembinaan Agen Statistik" },
+        { "skor": 1, "label": "Tidak terdapat jadwal pembinaan Agen Statistik dan belum ada kegiatan pembinaan Agen Statistik" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "15",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Apakah terdapat jadwal pengawasan/asistensi/kunjungan dari BPS Pengampu?",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal dan dokumentasi pengawasan/asistensi",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Terdapat jadwal pengawasan/asistensi dan terlaksana sesuai jadwal (100%)" },
+        { "skor": 3, "label": "Terdapat jadwal pengawasan/asistensi namun belum terlaksana sepenuhnya" },
+        { "skor": 2, "label": "Tidak terdapat jadwal pengawasan/asistensi namun telah dilakukan pengawasan/asistensi" },
+        { "skor": 1, "label": "Tidak terdapat jadwal pengawasan/asistensi dan belum dilakukan pengawasan/asistensi" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "16",
+      "aspekId": "pembinaan",
+      "pertanyaan": "Jadwal pengawasan/asistensi/kunjungan ke Pojok Statistik",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03333333333333333,
+      "buktiDukung": "Jadwal kunjungan BPS pengampu",
+      "contohLink": "s.bps.go.id/PotikSDM",
+      "tidakTercetak": false,
+      "catatan": "Bobot terpotong pada PDF; diturunkan dari bobot aspek (10% ÷ 3 = 3,33%)",
+      "rubrik": [
+        { "skor": 4, "label": "Harian (lebih dari 1 hari per pekan)" },
+        { "skor": 3, "label": "Mingguan/Pekanan (1 hari per pekan)" },
+        { "skor": 2, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 1, "label": "Tentatif (tidak terjadwal)" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "17",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Media dan cakupan promosi statistik yang telah dilakukan?",
+      "tipeInput": "checklist",
+      "inputRange": { "min": 0, "max": 4 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi kegiatan promosi",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "checklistItems": [
+        "Promosi statistik secara digital melalui media sosial resmi Pojok Statistik/media sosial resmi Perguruan Tinggi",
+        "Promosi statistik secara tatap muka dalam bentuk pameran/event lainnya dengan cakupan eksternal (publik)",
+        "Promosi statistik secara tatap muka dalam bentuk event (pameran/sosialisasi) dengan cakupan internal Perguruan Tinggi (lintas fakultas)",
+        "Promosi statistik tatap muka dalam bentuk event (pameran/sosialisasi) dengan cakupan internal Fakultas"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "4 item terpenuhi" },
+        { "skor": 3, "label": "3 item terpenuhi" },
+        { "skor": 2, "label": "2 item terpenuhi" },
+        { "skor": 1, "label": "1 item terpenuhi atau kurang" }
+      ],
+      "caraPengisian": "Isi jumlah item yang terpenuhi (0–4). Skor = jumlah item, minimal 1."
+    },
+    {
+      "no": "18",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Persentase penyusun infografis",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi infografis",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, >75% infografis disusun oleh Agen Statistik" },
+        { "skor": 3, "label": "Ya, 50–75% infografis disusun oleh Agen Statistik" },
+        { "skor": 2, "label": "Ya, ≤50% infografis disusun oleh Agen Statistik" },
+        { "skor": 1, "label": "Tidak, seluruh infografis disusun oleh BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "19A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi tayang infografis di PSV",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data tayang infografis di PSV",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "19B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi infografis dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "20",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Persentase penyusun video",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi video",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ya, >75% video disusun oleh Agen Statistik" },
+        { "skor": 3, "label": "Ya, 50–75% video disusun oleh Agen Statistik" },
+        { "skor": 2, "label": "Ya, ≤50% video disusun oleh Agen Statistik" },
+        { "skor": 1, "label": "Tidak, seluruh video disusun oleh BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "21A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi videografis tayang di PSV",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data tayang video di PSV",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "21B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi videografis dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "22",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Kegiatan Edukasi Statistik yang diselenggarakan oleh Pojok Statistik",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Dokumentasi kegiatan Edukasi Statistik",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "rubrik": [
+        { "skor": 4, "label": "Ada, berkaitan dengan Promosi Data BPS, Pemanfaatan Data BPS bagi perguruan tinggi dan Pembangunan Statistik bagi Pemerintah dan Masyarakat" },
+        { "skor": 3, "label": "Ada, berkaitan dengan Promosi Data BPS dan Pembangunan Statistik bagi Pemerintah dan Masyarakat" },
+        { "skor": 2, "label": "Ada, berkaitan dengan Promosi Data BPS dan Pemanfaatan Data BPS bagi perguruan tinggi" },
+        { "skor": 1, "label": "Ada, berkaitan dengan Promosi Data BPS" }
+      ],
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
+    },
+    {
+      "no": "23A",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Frekuensi Kegiatan Edukasi Statistik",
+      "tipeInput": "frekuensi",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "Data frekuensi kegiatan edukasi statistik",
+      "contohLink": "s.bps.go.id/PotikKegiatan",
+      "tidakTercetak": false,
+      "catatan": "Berlaku threshold 75% (Lampiran 2)",
+      "rubrik": [
+        { "skor": 4,   "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3,   "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2.5, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 2,   "label": "Triwulanan (1 hari per triwulan)" },
+        { "skor": 1.5, "label": "Semesteran (1 hari per semester)" },
+        { "skor": 1,   "label": "Tentatif (tidak menentu)" }
+      ],
+      "caraPengisian": "Pilih skor sesuai frekuensi tayang (4; 3; 2,5; 2; 1,5; 1)."
+    },
+    {
+      "no": "23B",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Skor kesesuaian realisasi Edukasi Statistik dengan target di RPK",
+      "tipeInput": "lampiran3",
+      "inputRange": { "min": 0, "max": 100 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.016666666666666666,
+      "buktiDukung": "Skor dari Lampiran 3 berdasarkan target periode pada RPK dan persentase realisasi",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "memerlukanTargetPeriode": true,
+      "caraPengisian": "Isi realisasi (%) 0–100 di kolom Input dan pilih target periode RPK. Skor otomatis dari Lampiran 3."
+    },
+    {
+      "no": "24",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama (35% − 26% = 9% ÷ 3 butir).",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "25",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "26",
+      "aspekId": "kegiatan_utama",
+      "pertanyaan": "Layanan konsultasi statistik (butir tidak tercetak di PDF)",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.03,
+      "buktiDukung": "",
+      "contohLink": "",
+      "tidakTercetak": true,
+      "catatan": "Hal. 9: layanan konsultasi dilaksanakan secara terjadwal; bila ada penyesuaian karena hari libur/jeda akademik wajib disertai kalender akademik resmi Perguruan Tinggi.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "27",
+      "aspekId": "kegiatan_tambahan",
+      "pertanyaan": "Apakah ada kegiatan lain yang diselenggarakan dalam program Pojok Statistik?",
+      "tipeInput": "jumlah_plus1",
+      "inputRange": { "min": 0, "max": 3 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kegiatan tambahan",
+      "contohLink": "",
+      "tidakTercetak": false,
+      "jenisKegiatan": [
+        "Joint Research",
+        "Kegiatan MSIB/Magang",
+        "Kegiatan BPS lainnya: Maha Cantik, pendataan/survei, penyusunan publikasi"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "Menyelenggarakan 3 macam atau lebih kegiatan lain", "jumlah": 3 },
+        { "skor": 3, "label": "Menyelenggarakan 2 macam kegiatan lain", "jumlah": 2 },
+        { "skor": 2, "label": "Menyelenggarakan 1 macam kegiatan lain", "jumlah": 1 },
+        { "skor": 1, "label": "Tidak ada", "jumlah": 0 }
+      ],
+      "caraPengisian": "Isi jumlah macam/tahap yang ada (0–3). Skor = jumlah + 1."
+    },
+    {
+      "no": "28",
+      "aspekId": "kolaborasi_pembiayaan",
+      "pertanyaan": "Apakah terdapat kolaborasi pembiayaan dalam penyelenggaraan Pojok Statistik?",
+      "tipeInput": "jumlah_plus1",
+      "inputRange": { "min": 0, "max": 3 },
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi pembiayaan",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": false,
+      "jenisKegiatan": [
+        "Kolaborasi pembiayaan pada saat proses inisiasi dan pembentukan",
+        "Kolaborasi pembiayaan pada saat peresmian",
+        "Kolaborasi pembiayaan pada operasional kegiatan"
+      ],
+      "rubrik": [
+        { "skor": 4, "label": "Kolaborasi pembiayaan pada semua tahap kegiatan Pojok Statistik", "jumlah": 3 },
+        { "skor": 3, "label": "Kolaborasi pembiayaan pada dua tahap kegiatan Pojok Statistik", "jumlah": 2 },
+        { "skor": 2, "label": "Kolaborasi pembiayaan pada salah satu tahap kegiatan Pojok Statistik", "jumlah": 1 },
+        { "skor": 1, "label": "Tidak, pembiayaan disediakan oleh salah satu pihak BPS/Perguruan Tinggi", "jumlah": 0 }
+      ],
+      "caraPengisian": "Isi jumlah macam/tahap yang ada (0–3). Skor = jumlah + 1."
+    },
+    {
+      "no": "29",
+      "aspekId": "kolaborasi_bps",
+      "pertanyaan": "Kolaborasi dengan Program Pembangunan Statistik di Tingkat Desa",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi statistik tingkat desa",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": true,
+      "catatan": "Hal. 10: kegiatan Pojok Statistik yang mendukung pembangunan statistik tingkat desa/kelurahan (mis. KKN, pelatihan pengolahan data untuk aparat desa). Nomor, redaksi, dan bobot diperkirakan.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    },
+    {
+      "no": "30",
+      "aspekId": "kolaborasi_bps",
+      "pertanyaan": "Kolaborasi dengan Pembinaan Statistik Sektoral",
+      "tipeInput": "pilihan",
+      "skorRange": { "min": 1, "max": 4 },
+      "bobotTercetak": 0.05,
+      "buktiDukung": "Dokumentasi kolaborasi pembinaan statistik sektoral",
+      "contohLink": "s.bps.go.id/PotikKolaborasi",
+      "tidakTercetak": true,
+      "catatan": "Hal. 10: kegiatan Pojok Statistik yang berdampak langsung pada percepatan Pembinaan Statistik Sektoral (mis. agen statistik sebagai pemateri di OPD, asistensi pengisian metadata). Nomor, redaksi, dan bobot diperkirakan.",
+      "rubrik": [
+        { "skor": 4, "label": "Skor 4" },
+        { "skor": 3, "label": "Skor 3" },
+        { "skor": 2, "label": "Skor 2" },
+        { "skor": 1, "label": "Skor 1" }
+      ],
+      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+    }
+  ],
+
+  "lampiran2_threshold": {
+    "keterangan": "Batas minimal frekuensi tayang untuk butir 19A, 21A, 23A. Periode Agustus 2025 – Juli 2026.",
+    "berlakuUntukButir": ["19A", "21A", "23A"],
+    "data": [
+      { "periode": "Harian",      "jumlahPeriode": 365, "threshold": 0.75, "batasMinimal": 274, "batasMaksimal": 365 },
+      { "periode": "Mingguan",    "jumlahPeriode": 52,  "threshold": 0.75, "batasMinimal": 39,  "batasMaksimal": 52 },
+      { "periode": "Bulanan",     "jumlahPeriode": 12,  "threshold": 0.75, "batasMinimal": 9,   "batasMaksimal": 12 },
+      { "periode": "Triwulanan",  "jumlahPeriode": 4,   "threshold": 0.75, "batasMinimal": 3,   "batasMaksimal": 4 },
+      { "periode": "Semesteran",  "jumlahPeriode": 2,   "threshold": 0.75, "batasMinimal": 2,   "batasMaksimal": 2 },
+      { "periode": "Tentatif",    "jumlahPeriode": null, "threshold": null, "batasMinimal": null, "batasMaksimal": null }
+    ]
+  },
+
+  "lampiran3_skorKesesuaian": {
+    "keterangan": "Tabel skor kesesuaian realisasi dengan target RPK. Dipakai untuk butir 19B, 21B, 23B.",
+    "berlakuUntukButir": ["19B", "21B", "23B"],
+    "pitaRealisasi": ["0", "1-25", "26-49", ">=50"],
+    "pitaRealisasiLogic": [
+      { "id": "0",     "label": "0%",     "kondisi": "realisasi === 0" },
+      { "id": "1-25",  "label": "1–25%",  "kondisi": "realisasi > 0 && realisasi <= 25" },
+      { "id": "26-49", "label": "26–49%", "kondisi": "realisasi > 25 && realisasi < 50" },
+      { "id": ">=50",  "label": "≥50%",   "kondisi": "realisasi >= 50" }
+    ],
+    "data": [
+      { "targetPeriode": "Tentatif",     "skor": [1,   1,   1,   1  ], "maksimalSkor": 1   },
+      { "targetPeriode": "Semesteran",   "skor": [1,   1.2, 1.4, 1.5], "maksimalSkor": 1.5 },
+      { "targetPeriode": "Triwulanan",   "skor": [1,   1.7, 1.9, 2  ], "maksimalSkor": 2   },
+      { "targetPeriode": "Bulanan",      "skor": [1,   2.2, 2.4, 2.5], "maksimalSkor": 2.5 },
+      { "targetPeriode": "Mingguan",     "skor": [1,   2.7, 2.9, 3  ], "maksimalSkor": 3   },
+      { "targetPeriode": "Harian",       "skor": [1,   3.3, 3.6, 4  ], "maksimalSkor": 4   }
+    ],
+    "targetPeriodeOptions": ["Tentatif", "Semesteran", "Triwulanan", "Bulanan", "Mingguan", "Harian"]
+  },
+
+  "kategoriZona": [
+    { "zona": "hijau",  "label": "Zona Hijau",  "keterangan": "Kinerja Tinggi",  "batasBawah": 2.67, "batasAtas": 4.00, "warna": "#22c55e" },
+    { "zona": "kuning", "label": "Zona Kuning", "keterangan": "Kinerja Sedang",  "batasBawah": 1.34, "batasAtas": 2.66, "warna": "#eab308" },
+    { "zona": "merah",  "label": "Zona Merah",  "keterangan": "Kinerja Rendah",  "batasBawah": 0.00, "batasAtas": 1.33, "warna": "#ef4444" }
+  ],
+
+  "rumus": {
+    "skorButir": {
+      "checklist": "MAX(1, jumlahItemTerpenuhi)",
+      "pilihan": "inputSkor",
+      "frekuensi": "inputSkor",
+      "lampiran3": "INDEX(tabelLampiran3, MATCH(targetPeriode), pitaRealisasi(persenRealisasi))",
+      "jumlah_plus1": "MIN(4, jumlahInput + 1)"
+    },
+    "skorTernormalisasi": "(skor - min) / (max - min)",
+    "bobotButirMetode1": "bobotAspek / jumlahButirDalamAspek",
+    "bobotButirMetode2": "bobotTercetak",
+    "kontribusiButir": "skorTernormalisasi * bobotButir * 4",
+    "ipotik": "SUM(semuaKontribusiButir)",
+    "kategori": "Dibulatkan ke 2 desimal, lalu dicocokkan dengan tabel kategoriZona"
+  },
+
+  "opsiDropdown": {
+    "skor1_4": [4, 3, 2, 1],
+    "skorFrekuensi": [4, 3, 2.5, 2, 1.5, 1],
+    "jumlah0_4": [0, 1, 2, 3, 4],
+    "jumlah0_3": [0, 1, 2, 3],
+    "targetPeriodeRPK": ["Tentatif", "Semesteran", "Triwulanan", "Bulanan", "Mingguan", "Harian"]
+  }
+}
