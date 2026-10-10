@@ -147,6 +147,50 @@ function kontribusiButir(skor, bobot, min = 1, maks = 4) {
   return norm * bobot * 4;
 }
 
+function saranPerbaikan(config, hasil, jawaban) {
+  return hasil.detailButir.map((detail) => {
+    const butir = config.butir.find((item) => item.no === detail.no);
+    const maksimum = Math.max(
+      butir.skorRange.max,
+      ...(butir.rubrik || []).map((opsi) => Number(opsi.skor))
+    );
+    if (detail.skor !== null && detail.skor >= maksimum) return null;
+
+    let saran;
+    if (butir.tipeInput === "checklist") {
+      const terpilih = jawaban[butir.no]?.items || Array.from(
+        { length: Math.min(Number(detail.input) || 0, butir.checklistItems.length) },
+        (_, index) => index
+      );
+      const belumTerpenuhi = butir.checklistItems.filter((_, index) => !terpilih.includes(index));
+      if (!belumTerpenuhi.length) return null;
+      saran = `Lengkapi kriteria: ${belumTerpenuhi.join("; ")}.`;
+    } else if (butir.tipeInput === "lampiran3") {
+      const targetPeriode = Object.entries(LAMPIRAN3)
+        .find(([, skor]) => skor[3] === maksimum)?.[0];
+      saran = `Tingkatkan realisasi terhadap target RPK hingga minimal 50% dan tetapkan target periode ${targetPeriode || "yang realistis"}.`;
+    } else {
+      const target = (butir.rubrik || []).find((opsi) => Number(opsi.skor) === maksimum);
+      saran = target ? `Tingkatkan capaian ke skor ${maksimum}: ${target.label}.` : `Tingkatkan capaian hingga skor ${maksimum}.`;
+    }
+
+    const kontribusiMaksimal = kontribusiButir(
+      maksimum,
+      detail.bobot,
+      butir.skorRange.min,
+      butir.skorRange.max
+    );
+    return {
+      no: detail.no,
+      pertanyaan: detail.pertanyaan,
+      saran,
+      skorSaatIni: detail.skor,
+      skorTarget: maksimum,
+      kenaikanIPotik: Math.max(0, kontribusiMaksimal - detail.kontribusi),
+    };
+  }).filter(Boolean).sort((a, b) => b.kenaikanIPotik - a.kenaikanIPotik);
+}
+
 // ──────────────────────────────────────────────
 // 7. KATEGORI ZONA
 // ──────────────────────────────────────────────
@@ -296,6 +340,7 @@ export {
   normalisasi,
   bobotButir,
   kontribusiButir,
+  saranPerbaikan,
   tentukanZona,
   hitungIPotik,
 };

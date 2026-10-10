@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 import fs from 'node:fs';
-import { bobotButir, hitungIPotik, tentukanZona, hitungSkorButir } from './data/ipotik-engine.js';
+import vm from 'node:vm';
+import { bobotButir, hitungIPotik, tentukanZona, hitungSkorButir, saranPerbaikan } from './data/ipotik-engine.js';
 
 const config = JSON.parse(fs.readFileSync('./data/ipotik-config.json', 'utf8'));
 
@@ -51,5 +52,39 @@ assert.strictEqual(tentukanZona(2.66).zona, 'kuning');
 assert.strictEqual(tentukanZona(1.34).zona, 'kuning');
 assert.strictEqual(tentukanZona(1.33).zona, 'merah');
 assert.strictEqual(tentukanZona(0.0).zona, 'merah');
+
+// Test 6: Recommendations identify actionable checklist gaps and rank by score uplift
+const recommendationAnswers = {
+  '1': { input: 2, items: [0, 1] },
+  '2': { input: 3 }
+};
+const recommendationResult = hitungIPotik(config, recommendationAnswers);
+const recommendations = saranPerbaikan(config, recommendationResult, recommendationAnswers);
+const checklistAdvice = recommendations.find(item => item.no === '1');
+const rpkAdvice = recommendations.find(item => item.no === '2');
+assert.ok(checklistAdvice.saran.includes('SK Tim Pojok Statistik BPS'));
+assert.ok(checklistAdvice.kenaikanIPotik > 0);
+assert.ok(rpkAdvice.saran.includes('skor 4'));
+assert.ok(recommendations.every((item, index) =>
+  index === 0 || recommendations[index - 1].kenaikanIPotik >= item.kenaikanIPotik
+));
+
+// Test 7: Embedded offline engine initializes and exposes the same recommendations
+const html = fs.readFileSync('./index.html', 'utf8');
+const fallbackScript = html.match(/<script>\s*\/\/ Inlined engine fallback[\s\S]*?<\/script>/)[0]
+  .replace(/^<script>|<\/script>$/g, '');
+const sandbox = { window: {} };
+vm.runInNewContext(fallbackScript, sandbox);
+const fallbackEngine = sandbox.window.__IPOTIK_FALLBACK_ENGINE__;
+assert.strictEqual(typeof fallbackEngine.hitungIPotik, 'function');
+assert.strictEqual(typeof fallbackEngine.saranPerbaikan, 'function');
+assert.deepStrictEqual(
+  JSON.parse(JSON.stringify(fallbackEngine.saranPerbaikan(
+    config,
+    fallbackEngine.hitungIPotik(config, recommendationAnswers),
+    recommendationAnswers
+  ))),
+  recommendations
+);
 
 console.log('Semua test scoring engine lulus!');
