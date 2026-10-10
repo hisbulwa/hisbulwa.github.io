@@ -115,14 +115,14 @@ function normalisasi(skor, min = 1, maks = 4) {
  *
  * @param {Object} butir    — definisi butir
  * @param {Object} aspek    — definisi aspek yang memuat butir ini
- * @param {number} metode   — 1 = rumus resmi, 2 = bobot tercetak
+ * @param {number} metode   — 1 = rumus resmi, 2 = bobot tercetak, 3 = sistem saat ini
  * @returns {number}
  */
 function bobotButir(butir, aspek, metode) {
-  if (metode === 2) {
+  if (metode === 2 || metode === 3) {
     return butir.bobotTercetak;
   }
-  // Metode 1 (default): bobot aspek ÷ jumlah butir dalam aspek
+  // Metode 1: bobot aspek ÷ jumlah butir dalam aspek
   return aspek.bobot / aspek.jumlahButir;
 }
 
@@ -158,13 +158,19 @@ const ZONA = [
 ];
 
 /**
- * Menentukan kategori zona berdasarkan nilai IPotik.
- * IPotik dibulatkan ke 2 desimal sebelum dicocokkan.
+ * Menentukan kategori zona berdasarkan nilai IPotik dan metode pembobotan.
  *
  * @param {number} ipotik
+ * @param {number} [metode=1]
  * @returns {Object} { zona, label, keterangan, warna }
  */
-function tentukanZona(ipotik) {
+function tentukanZona(ipotik, metode = 1) {
+  if (metode === 3) {
+    const rounded = Math.round(ipotik * 10000) / 10000;
+    if (rounded > 2.66) return ZONA[0];
+    if (rounded > 1.33) return ZONA[1];
+    return ZONA[2];
+  }
   const rounded = Math.round(ipotik * 100) / 100;
   if (rounded >= 2.67) return ZONA[0]; // Hijau (2.67 – 4.00)
   if (rounded >= 1.34) return ZONA[1]; // Kuning (1.34 – 2.66)
@@ -181,10 +187,10 @@ function tentukanZona(ipotik) {
  * @param {Object}   config     — isi ipotik-config.json
  * @param {Object}   jawaban    — { [noButir]: { input, targetPeriode? } }
  *                                Contoh: { "1": { input: 3 }, "19B": { input: 80, targetPeriode: "Bulanan" } }
- * @param {number}   [metode=1] — 1 = rumus resmi, 2 = bobot tercetak
+ * @param {number}   [metode=config.meta.metodeDefault] — 1 = rumus resmi, 2 = bobot tercetak, 3 = sistem saat ini
  * @returns {Object} hasil perhitungan lengkap
  */
-function hitungIPotik(config, jawaban, metode = 1) {
+function hitungIPotik(config, jawaban, metode = config.meta.metodeDefault) {
   const aspekMap = {};
   for (const a of config.aspek) {
     aspekMap[a.id] = a;
@@ -265,7 +271,7 @@ function hitungIPotik(config, jawaban, metode = 1) {
   });
 
   const ipotikRounded = Math.round(totalIPotik * 100) / 100;
-  const zona = tentukanZona(totalIPotik);
+  const zona = tentukanZona(totalIPotik, metode);
 
   return {
     ipotik: ipotikRounded,

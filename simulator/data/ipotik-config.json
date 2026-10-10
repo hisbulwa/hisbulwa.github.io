@@ -7,10 +7,11 @@
     "periodeAktivitas": "Agustus 2025 – Juli 2026",
     "skalaIPotik": { "min": 0, "max": 4 },
     "jumlahButir": 33,
-    "metodeDefault": 1,
+    "metodeDefault": 3,
     "keterangan": {
       "metode1": "Rumus resmi hal. 13: tiap butir dalam satu aspek berbobot sama (bobot aspek ÷ jumlah butir)",
-      "metode2": "Bobot tercetak pada instrumen (ada perbedaan di aspek Kegiatan Utama)"
+      "metode2": "Bobot tercetak pada instrumen (ada perbedaan di aspek Kegiatan Utama)",
+      "metode3": "Meniru sistem saat ini (LkMonevDE.php, iPotik25): bobot kelompok seperti kode; kategori memakai pembulatan 4 desimal"
     }
   },
 
@@ -449,7 +450,7 @@
       "contohLink": "s.bps.go.id/PotikKegiatan",
       "tidakTercetak": false,
       "rubrik": [
-        { "skor": 4, "label": "Ya, >75% video disusun oleh Agen Statistik" },
+        { "skor": 4, "label": "Ya, >75% video disusun oleh Agen Statistik (17/17)" },
         { "skor": 3, "label": "Ya, 50–75% video disusun oleh Agen Statistik" },
         { "skor": 2, "label": "Ya, ≤50% video disusun oleh Agen Statistik" },
         { "skor": 1, "label": "Tidak, seluruh video disusun oleh BPS" }
@@ -547,7 +548,7 @@
     {
       "no": "24",
       "aspekId": "kegiatan_utama",
-      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "pertanyaan": "Apakah terdapat layanan Konsultasi Statistik di Pojok Statistik?",
       "tipeInput": "pilihan",
       "skorRange": { "min": 1, "max": 4 },
       "bobotTercetak": 0.03,
@@ -556,17 +557,17 @@
       "tidakTercetak": true,
       "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama (35% − 26% = 9% ÷ 3 butir).",
       "rubrik": [
-        { "skor": 4, "label": "Skor 4" },
-        { "skor": 3, "label": "Skor 3" },
-        { "skor": 2, "label": "Skor 2" },
-        { "skor": 1, "label": "Skor 1" }
+        { "skor": 4, "label": "Terdapat layanan konsultasi statistik tatap muka yang terjadwal dan jadwal tersebut disampaikan secara terbuka kepada pengguna" },
+        { "skor": 3, "label": "Terdapat layanan konsultasi statistik tatap muka yang terjadwal namun jadwal tersebut tidak disampaikan secara terbuka kepada pengguna" },
+        { "skor": 2, "label": "Terdapat layanan konsultasi statistik tatap muka namun tidak terjadwal" },
+        { "skor": 1, "label": "Tidak terdapat layanan konsultasi statistik tatap muka" }
       ],
       "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
     },
     {
       "no": "25",
       "aspekId": "kegiatan_utama",
-      "pertanyaan": "(Butir tidak tercetak di PDF)",
+      "pertanyaan": "Rata-rata transaksi/kunjungan konsultasi tatap muka di Pojok Statistik per bulan.",
       "tipeInput": "pilihan",
       "skorRange": { "min": 1, "max": 4 },
       "bobotTercetak": 0.03,
@@ -575,17 +576,17 @@
       "tidakTercetak": true,
       "catatan": "Rubrik butir ini tidak tercantum pada PDF (Lampiran 1 melompat dari No. 23B ke No. 27). Bobot 3% diturunkan dari sisa bobot aspek Kegiatan Utama.",
       "rubrik": [
-        { "skor": 4, "label": "Skor 4" },
-        { "skor": 3, "label": "Skor 3" },
-        { "skor": 2, "label": "Skor 2" },
-        { "skor": 1, "label": "Skor 1" }
+        { "skor": 4, "label": "Lebih dari 50" },
+        { "skor": 3, "label": "31 – 50" },
+        { "skor": 2, "label": "11 – 30" },
+        { "skor": 1, "label": "Kurang dari sama dengan 10" }
       ],
       "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
     },
     {
       "no": "26",
       "aspekId": "kegiatan_utama",
-      "pertanyaan": "Layanan konsultasi statistik (butir tidak tercetak di PDF)",
+      "pertanyaan": "Kapan waktu pelayanan Konsultasi Statistik di Pojok Statistik?",
       "tipeInput": "pilihan",
       "skorRange": { "min": 1, "max": 4 },
       "bobotTercetak": 0.03,
@@ -594,10 +595,10 @@
       "tidakTercetak": true,
       "catatan": "Hal. 9: layanan konsultasi dilaksanakan secara terjadwal; bila ada penyesuaian karena hari libur/jeda akademik wajib disertai kalender akademik resmi Perguruan Tinggi.",
       "rubrik": [
-        { "skor": 4, "label": "Skor 4" },
-        { "skor": 3, "label": "Skor 3" },
-        { "skor": 2, "label": "Skor 2" },
-        { "skor": 1, "label": "Skor 1" }
+        { "skor": 4, "label": "Harian (lebih dari 1 hari setiap pekan)" },
+        { "skor": 3, "label": "Pekanan/Mingguan (1 hari per pekan)" },
+        { "skor": 2, "label": "Bulanan (1 hari per bulan)" },
+        { "skor": 1, "label": "Tentatif (tidak menentu)" }
       ],
       "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
     },
@@ -652,40 +653,36 @@
     {
       "no": "29",
       "aspekId": "kolaborasi_bps",
-      "pertanyaan": "Kolaborasi dengan Program Pembangunan Statistik di Tingkat Desa",
+      "pertanyaan": "Apakah terdapat kolaborasi Pojok Statistik dalam Program Pembangunan Statistik di tingkat Desa?",
       "tipeInput": "pilihan",
       "skorRange": { "min": 1, "max": 4 },
       "bobotTercetak": 0.05,
       "buktiDukung": "Dokumentasi kolaborasi statistik tingkat desa",
       "contohLink": "s.bps.go.id/PotikKolaborasi",
-      "tidakTercetak": true,
-      "catatan": "Hal. 10: kegiatan Pojok Statistik yang mendukung pembangunan statistik tingkat desa/kelurahan (mis. KKN, pelatihan pengolahan data untuk aparat desa). Nomor, redaksi, dan bobot diperkirakan.",
       "rubrik": [
-        { "skor": 4, "label": "Skor 4" },
-        { "skor": 3, "label": "Skor 3" },
-        { "skor": 2, "label": "Skor 2" },
-        { "skor": 1, "label": "Skor 1" }
+        { "skor": 4, "label": "Ya, terdapat kegiatan kolaborasi dengan Desa Cantik dan melibatkan mahasiswa Agen Statistik dalam bentuk kegiatan KKN" },
+        { "skor": 3, "label": "Ya, terdapat kegiatan kolaborasi dengan Desa Cantik dan melibatkan mahasiswa Agen Statistik selain kegiatan KKN" },
+        { "skor": 2, "label": "Ya, terdapat kegiatan kolaborasi yang melibatkan mahasiswa Agen Statistik di luar lokus Desa Cantik" },
+        { "skor": 1, "label": "Tidak terdapat kegiatan kolaborasi Pojok Statistik dalam Program Pembangunan Statistik di tingkat Desa" }
       ],
-      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
     },
     {
       "no": "30",
       "aspekId": "kolaborasi_bps",
-      "pertanyaan": "Kolaborasi dengan Pembinaan Statistik Sektoral",
+      "pertanyaan": "Apakah terdapat kolaborasi Pojok Statistik dengan Pembinaan Statistik Sektoral?",
       "tipeInput": "pilihan",
       "skorRange": { "min": 1, "max": 4 },
       "bobotTercetak": 0.05,
       "buktiDukung": "Dokumentasi kolaborasi pembinaan statistik sektoral",
       "contohLink": "s.bps.go.id/PotikKolaborasi",
-      "tidakTercetak": true,
-      "catatan": "Hal. 10: kegiatan Pojok Statistik yang berdampak langsung pada percepatan Pembinaan Statistik Sektoral (mis. agen statistik sebagai pemateri di OPD, asistensi pengisian metadata). Nomor, redaksi, dan bobot diperkirakan.",
       "rubrik": [
-        { "skor": 4, "label": "Skor 4" },
-        { "skor": 3, "label": "Skor 3" },
-        { "skor": 2, "label": "Skor 2" },
-        { "skor": 1, "label": "Skor 1" }
+        { "skor": 4, "label": "Terdapat kegiatan Pojok Statistik yang berkolaborasi dengan Perguruan Tinggi dengan melibatkan Mahasiswa Agen Statistik untuk mendukung percepatan capaian Pembinaan Statistik Sektoral" },
+        { "skor": 3, "label": "Terdapat kegiatan Pojok Statistik yang berkolaborasi dengan Perguruan Tinggi dengan melibatkan Mahasiswa selain Agen Statistik untuk mendukung percepatan capaian Pembinaan Statistik Sektoral" },
+        { "skor": 2, "label": "Terdapat kegiatan Pojok Statistik untuk mendukung percepatan capaian Pembinaan Statistik Sektoral tanpa berkolaborasi dengan Perguruan Tinggi" },
+        { "skor": 1, "label": "Belum terdapat kegiatan Pojok Statistik yang mendukung percepatan capaian Pembinaan Statistik Sektoral" }
       ],
-      "caraPengisian": "Butir tidak tercetak di PDF: isi skor 1–4 sesuai instrumen asli."
+      "caraPengisian": "Pilih skor (1–4) sesuai pilihan pada rubrik."
     }
   ],
 
@@ -740,6 +737,7 @@
     "skorTernormalisasi": "(skor - min) / (max - min)",
     "bobotButirMetode1": "bobotAspek / jumlahButirDalamAspek",
     "bobotButirMetode2": "bobotTercetak",
+    "bobotButirMetode3": "bobot kelompok sistem saat ini",
     "kontribusiButir": "skorTernormalisasi * bobotButir * 4",
     "ipotik": "SUM(semuaKontribusiButir)",
     "kategori": "Dibulatkan ke 2 desimal, lalu dicocokkan dengan tabel kategoriZona"

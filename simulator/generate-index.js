@@ -973,8 +973,9 @@ const html = `<!DOCTYPE html>
           <label for="score-more-toggle" class="btn score-more-btn">Lainnya</label>
           <div class="score-actions">
             <select class="method-selector" id="method-select" title="Pilih Metode Pembobotan">
-              <option value="1">Metode 1: Rumus Resmi (Default)</option>
+              <option value="1">Metode 1: Rumus Resmi</option>
               <option value="2">Metode 2: Bobot Tercetak</option>
+              <option value="3">Metode 3: Sistem Saat Ini (Default)</option>
             </select>
             <button class="btn btn-primary" id="btn-max" title="Isi semua butir dengan skor tertinggi">
               Skor Maksimal
@@ -985,6 +986,9 @@ const html = `<!DOCTYPE html>
             <button class="btn" id="btn-print" title="Cetak atau simpan sebagai dokumen PDF">
               Cetak / PDF
             </button>
+            <a class="btn" href="https://docs.google.com/spreadsheets/d/1EAocoKIR3pn2W-XOPADIizz_Vm8hrYb8/edit?usp=sharing&amp;ouid=117014170219577938176&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener noreferrer" title="Buka file simulasi Excel di tab baru">
+              Unduh Excel
+            </a>
           </div>
         </div>
       </div>
@@ -1112,7 +1116,7 @@ ${configJson.trim()}
     const STORAGE_KEY = 'ipotik_simulator_answers_v2026';
     const METHOD_KEY = 'ipotik_simulator_method_v2026';
 
-    let metode = parseInt(localStorage.getItem(METHOD_KEY) || '1', 10);
+    let metode = parseInt(localStorage.getItem(METHOD_KEY) || config.meta.metodeDefault.toString(), 10);
     let jawaban = {};
 
     try {

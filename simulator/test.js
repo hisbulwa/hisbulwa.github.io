@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import fs from 'node:fs';
-import { hitungIPotik, tentukanZona, hitungSkorButir } from './data/ipotik-engine.js';
+import { bobotButir, hitungIPotik, tentukanZona, hitungSkorButir } from './data/ipotik-engine.js';
 
 const config = JSON.parse(fs.readFileSync('./data/ipotik-config.json', 'utf8'));
 
@@ -27,14 +27,24 @@ const maxRes2 = hitungIPotik(config, maxAnswers, 2);
 assert.strictEqual(maxRes2.ipotik, 4);
 assert.strictEqual(maxRes2.zona.zona, 'hijau');
 
-// Test 3: Lampiran 3 lookup
+// Test 3: Method 3 uses printed weights, with its own zone thresholds
+const kegiatanUtama = config.aspek.find(a => a.id === 'kegiatan_utama');
+assert.strictEqual(bobotButir(config.butir.find(b => b.no === '17'), kegiatanUtama, 3), 0.03);
+assert.strictEqual(bobotButir(config.butir.find(b => b.no === '19B'), kegiatanUtama, 3), 1 / 60);
+assert.strictEqual(hitungIPotik(config, maxAnswers).metode, 3);
+assert.strictEqual(tentukanZona(2.66, 3).zona, 'kuning');
+assert.strictEqual(tentukanZona(2.6601, 3).zona, 'hijau');
+assert.strictEqual(tentukanZona(1.33, 3).zona, 'merah');
+assert.strictEqual(tentukanZona(1.3301, 3).zona, 'kuning');
+
+// Test 4: Lampiran 3 lookup
 const b19B = config.butir.find(b => b.no === '19B');
 assert.strictEqual(hitungSkorButir(b19B, 0, 'Bulanan'), 1);
 assert.strictEqual(hitungSkorButir(b19B, 20, 'Bulanan'), 2.2);
 assert.strictEqual(hitungSkorButir(b19B, 40, 'Bulanan'), 2.4);
 assert.strictEqual(hitungSkorButir(b19B, 60, 'Bulanan'), 2.5);
 
-// Test 4: Zona thresholds
+// Test 5: Methods 1 and 2 zone thresholds
 assert.strictEqual(tentukanZona(4.0).zona, 'hijau');
 assert.strictEqual(tentukanZona(2.67).zona, 'hijau');
 assert.strictEqual(tentukanZona(2.66).zona, 'kuning');
