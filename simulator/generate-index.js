@@ -49,7 +49,7 @@ const html = `<!DOCTYPE html>
           <label for="login-password">Password</label>
           <input type="password" id="login-password" placeholder="Masukkan password" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; justify-content: center; font-size: 0.92rem;">
+        <button type="submit" class="btn btn-primary login-submit">
           Masuk
         </button>
       </form>
@@ -65,7 +65,7 @@ const html = `<!DOCTYPE html>
     <div class="print-header container">
       <h1>Laporan Simulasi Penilaian Indeks Pojok Statistik (IPotik) 2026</h1>
       <p>Badan Pusat Statistik RI &mdash; Tanggal Simulasi: <span id="print-date"></span></p>
-      <div id="print-score-summary" style="margin-top:10px; font-weight:bold; font-size:1.1rem;"></div>
+      <div id="print-score-summary" class="print-score-summary"></div>
     </div>
 
     <!-- HERO HEADER -->
@@ -81,7 +81,7 @@ const html = `<!DOCTYPE html>
               <span data-theme-label>Terang</span>
             </button>
             <span class="user-pill"><span id="user-display">admin</span></span>
-            <button class="btn btn-danger" id="btn-logout" title="Keluar dari sesi" style="font-size:0.75rem; padding:4px 10px;">
+            <button class="btn btn-danger logout-button" id="btn-logout" title="Keluar dari sesi" style="padding:4px 10px;">
               Keluar
             </button>
           </div>
@@ -139,7 +139,7 @@ const html = `<!DOCTYPE html>
               Cetak / PDF
             </button>
             <a class="btn" href="https://docs.google.com/spreadsheets/d/1EAocoKIR3pn2W-XOPADIizz_Vm8hrYb8/edit?usp=sharing&amp;ouid=117014170219577938176&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener noreferrer" title="Buka file simulasi Excel di tab baru">
-              Unduh Simulator dalam Format Excel
+              Unduh Simulator / XLSX
             </a>
           </div>
         </div>
@@ -155,6 +155,8 @@ const html = `<!DOCTYPE html>
           <!-- Rendered by JS -->
         </div>
       </section>
+
+      <nav class="dimension-nav" id="dimension-nav" aria-label="Navigasi dimensi"></nav>
 
       <!-- FORMULIR PENILAIAN 33 BUTIR -->
       <section id="form-container">
@@ -338,6 +340,7 @@ ${configJson.trim()}
     const progressBarEl = document.getElementById('progress-bar');
     const methodSelectEl = document.getElementById('method-select');
     const dimensiGridEl = document.getElementById('dimensi-summary-grid');
+    const dimensionNavigationEl = document.getElementById('dimension-nav');
     const formContainerEl = document.getElementById('form-container');
     const printDateEl = document.getElementById('print-date');
     const printSummaryEl = document.getElementById('print-score-summary');
@@ -412,9 +415,76 @@ ${configJson.trim()}
           dimBlock.appendChild(aspBlock);
         });
 
+        const stepNav = document.createElement('div');
+        stepNav.className = 'dimension-step-nav';
+        const previousButton = document.createElement('button');
+        previousButton.type = 'button';
+        previousButton.className = 'btn';
+        previousButton.textContent = 'Dimensi sebelumnya';
+        previousButton.disabled = dimIdx === 0;
+        previousButton.addEventListener('click', () => goToDimension(dimIdx - 1));
+
+        const nextButton = document.createElement('button');
+        nextButton.type = 'button';
+        nextButton.className = 'btn btn-primary';
+        nextButton.textContent = 'Dimensi berikutnya';
+        nextButton.disabled = dimIdx === config.dimensi.length - 1;
+        nextButton.addEventListener('click', () => goToDimension(dimIdx + 1));
+        stepNav.append(previousButton, nextButton);
+        dimBlock.appendChild(stepNav);
         formContainerEl.appendChild(dimBlock);
       });
+
+      dimensionNavigationEl.replaceChildren();
+      config.dimensi.forEach((dim, dimIdx) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dimension-nav-item';
+        button.dataset.dimensionId = dim.id;
+        button.setAttribute('aria-current', 'false');
+
+        const step = document.createElement('span');
+        step.className = 'dimension-nav-step';
+        step.textContent = String(dimIdx + 1);
+        const name = document.createElement('span');
+        name.className = 'dimension-nav-name';
+        name.textContent = dim.nama;
+        const progress = document.createElement('span');
+        progress.className = 'dimension-nav-progress';
+        button.append(step, name, progress);
+        button.addEventListener('click', () => goToDimension(dimIdx));
+        dimensionNavigationEl.appendChild(button);
+      });
+      setActiveDimension(config.dimensi[0]?.id);
+      syncActiveDimension();
     }
+
+    function goToDimension(index) {
+      const dimension = config.dimensi[index];
+      if (!dimension) return;
+      setActiveDimension(dimension.id);
+      document.getElementById('section-' + dimension.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function setActiveDimension(id) {
+      dimensionNavigationEl.querySelectorAll('.dimension-nav-item').forEach(button => {
+        const active = button.dataset.dimensionId === id;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-current', active ? 'location' : 'false');
+      });
+    }
+
+    function syncActiveDimension() {
+      const offset = document.querySelector('.sticky-score-bar').getBoundingClientRect().bottom + 24;
+      let current = config.dimensi[0];
+      config.dimensi.forEach(dim => {
+        const section = document.getElementById('section-' + dim.id);
+        if (section.getBoundingClientRect().top <= offset) current = dim;
+      });
+      setActiveDimension(current?.id);
+    }
+    window.addEventListener('scroll', syncActiveDimension, { passive: true });
+    window.addEventListener('resize', syncActiveDimension);
 
     // RENDER CARD BUTIR
     function renderButirCard(b, asp) {
@@ -427,7 +497,7 @@ ${configJson.trim()}
       hdr.innerHTML = \`
         <div style="display:flex; align-items:center; gap:8px;">
           <span class="butir-number">Butir \${b.no}</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Bobot: \${(b.bobotTercetak * 100).toFixed(1)}%</span>
+          <span class="butir-weight">Bobot: \${(b.bobotTercetak * 100).toFixed(1)}%</span>
         </div>
         <div class="butir-score-badge" id="badge-\${b.no}">
           <span>Skor: -</span>
@@ -615,6 +685,8 @@ ${configJson.trim()}
         else lbl.classList.remove('selected');
       });
       saveAndRecalculate();
+      const cards = Array.from(formContainerEl.querySelectorAll('.butir-card'));
+      cards[cards.indexOf(card) + 1]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function onLampiran3Change(b) {
@@ -723,6 +795,14 @@ ${configJson.trim()}
       progressFillEl.style.width = pct + '%';
       progressBarEl.setAttribute('aria-valuenow', pct);
 
+      const dimensionByAspect = new Map(config.aspek.map(aspek => [aspek.id, aspek.dimensiId]));
+      dimensionNavigationEl.querySelectorAll('.dimension-nav-item').forEach(button => {
+        const butir = res.detailButir.filter(detail => dimensionByAspect.get(detail.aspekId) === button.dataset.dimensionId);
+        const answered = butir.filter(detail => detail.skor !== null).length;
+        button.querySelector('.dimension-nav-progress').textContent = answered + '/' + butir.length;
+        button.setAttribute('aria-label', button.querySelector('.dimension-nav-name').textContent + ', ' + answered + ' dari ' + butir.length + ' pertanyaan terjawab');
+      });
+
       renderDimensiCards(res.rekapDimensi);
 
       res.rekapAspek.forEach(a => {
@@ -805,11 +885,26 @@ ${configJson.trim()}
 
     const scoreMoreToggle = document.getElementById('score-more-toggle');
     const scoreActions = document.getElementById('score-actions');
+    const scoreActionsWrap = document.querySelector('.score-actions-wrap');
+    const closeScoreActions = () => {
+      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      scoreMoreToggle.setAttribute('aria-expanded', 'false');
+      scoreMoreToggle.setAttribute('aria-label', 'Buka menu tindakan');
+      scoreActions.classList.remove('is-open');
+    };
     scoreMoreToggle.addEventListener('click', () => {
       const expanded = scoreMoreToggle.getAttribute('aria-expanded') === 'true';
       scoreMoreToggle.setAttribute('aria-expanded', String(!expanded));
       scoreMoreToggle.setAttribute('aria-label', expanded ? 'Buka menu tindakan' : 'Tutup menu tindakan');
       scoreActions.classList.toggle('is-open', !expanded);
+    });
+    document.addEventListener('pointerdown', event => {
+      if (!scoreActionsWrap.contains(event.target)) closeScoreActions();
+    });
+    document.addEventListener('wheel', closeScoreActions, { passive: true });
+    document.addEventListener('touchmove', closeScoreActions, { passive: true });
+    document.addEventListener('keydown', event => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) closeScoreActions();
     });
 
     document.getElementById('btn-recommendations').addEventListener('click', () => {
