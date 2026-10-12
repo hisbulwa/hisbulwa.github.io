@@ -1,0 +1,18 @@
+body {
+  padding-bottom: 0;
+}
+
+.login-error:empty {
+  display: none;
+}
+
+.login-error:not(:empty) {
+  display: block;
+}
+
+#login-view .login-theme-toggle {
+  display: inline-flex;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

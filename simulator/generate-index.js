@@ -29,36 +29,6 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
-  <div id="login-view">
-    <div class="login-card">
-      <button type="button" class="btn theme-toggle login-theme-toggle" data-theme-toggle aria-label="Ganti ke tema gelap">
-        <span data-theme-label>Terang</span>
-      </button>
-      <div class="login-header">
-        <h1>Pojok Statistik</h1>
-        <p>Masuk ke Simulator Penilaian IPotik 2026</p>
-      </div>
-      <div id="login-error" class="login-error"></div>
-      <form id="login-form">
-        <div class="login-field">
-          <label for="login-username">Username</label>
-          <input type="text" id="login-username" placeholder="Masukkan username" required autocomplete="username">
-        </div>
-        <div class="login-field">
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" placeholder="Masukkan password" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="btn btn-primary login-submit">
-          Masuk
-        </button>
-      </form>
-      <div class="login-hint">
-        Akun default evaluasi: <strong>admin</strong> / <strong>admin</strong>
-      </div>
-    </div>
-  </div>
-
   <!-- APPLICATION VIEW (Protected) -->
   <div id="app-view" style="display: none;">
     <!-- PRINT ONLY HEADER -->
@@ -243,12 +213,7 @@ ${configJson.trim()}
 
     // AUTHENTICATION
     const AUTH_KEY = 'ipotik_auth_user';
-    const loginView = document.getElementById('login-view');
     const appView = document.getElementById('app-view');
-    const loginForm = document.getElementById('login-form');
-    const loginUser = document.getElementById('login-username');
-    const loginPass = document.getElementById('login-password');
-    const loginErr = document.getElementById('login-error');
     const userDisplay = document.getElementById('user-display');
     const btnLogout = document.getElementById('btn-logout');
 
@@ -256,37 +221,20 @@ ${configJson.trim()}
 
     function checkAuth() {
       const user = sessionStorage.getItem(AUTH_KEY);
-      if (user) {
-        loginView.style.display = 'none';
-        appView.style.display = 'block';
-        if (userDisplay) userDisplay.textContent = user;
-        if (!isAppInitialized) {
-          initApp();
-          isAppInitialized = true;
-        } else {
-          populateFormValues();
-          saveAndRecalculate();
-        }
-      } else {
-        loginView.style.display = 'flex';
-        appView.style.display = 'none';
-      }
-    }
-
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const u = loginUser.value.trim();
-      const p = loginPass.value.trim();
-      if (!u || !p) {
-        loginErr.textContent = 'Username dan password wajib diisi';
-        loginErr.style.display = 'block';
+      if (!user) {
+        window.location.replace('/');
         return;
       }
-      sessionStorage.setItem(AUTH_KEY, u);
-      loginErr.style.display = 'none';
-      loginForm.reset();
-      checkAuth();
-    });
+      appView.style.display = 'block';
+      if (userDisplay) userDisplay.textContent = user;
+      if (!isAppInitialized) {
+        initApp();
+        isAppInitialized = true;
+      } else {
+        populateFormValues();
+        saveAndRecalculate();
+      }
+    }
 
     btnLogout.addEventListener('click', () => {
       sessionStorage.removeItem(AUTH_KEY);
